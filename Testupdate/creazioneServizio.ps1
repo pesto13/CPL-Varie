@@ -8,7 +8,6 @@ function Get-NextDNT{
     #TODO attenzione che con 10 slot non funziona piu
     # Calcola il prossimo DNT libero
     param(
-        [Parameter(Mandatory=$true)]
         [String]$latestDNT
     )
 
@@ -25,7 +24,6 @@ function Get-AutomaticNextSlot {
 function Get-AutomaticNextFirstPort {
     # Restuisce la porta di defualt associata allo slot specificato
     param (
-        [Parameter(Mandatory=$true)]
         [string]$SlotX
     )
     $jsonData = Get-Content -Path $DEFULT_SLOT_PORT -Raw | ConvertFrom-Json -AsHashtable
@@ -34,7 +32,6 @@ function Get-AutomaticNextFirstPort {
 
 function New-MyConfiguredNavInstance {
     param (
-        [Parameter(Mandatory=$true)]
         [string]$ServerTestInstance,
         [string]$SlotX,
         [int[]]$porte
@@ -91,10 +88,18 @@ function Get-MyNavConfiguration{
     return $ServerTestInstance, $SlotX, $porte
 }
 
+function Write-FilePorte {
+    param (
+        [string]$ServerTestInstance,
+        [string]$SlotX,
+        [int[]]$porte
+    )
+
+    $informazioni = "$SlotX`t$($porte[0])-$($porte[4])`t$ServerTestInstance"
+    Add-Content -Path $PORTEMD -Value $informazioni
+}
+
 # TODO check 
 $val = Get-MyNavConfiguration
 New-MyConfiguredNavInstance @val
-
-# documento sul file
-$informazioni = "$SlotX`t$ServerTestInstance`t$porte[0]-$porte[4]"
-Add-Content -Path $PORTEMD -Value $informazioni
+Write-FilePorte @val
