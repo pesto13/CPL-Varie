@@ -37,15 +37,11 @@ function New-MyConfiguredNavInstance {
         [Parameter(Mandatory=$true)]
         [string]$ServerTestInstance,
         [string]$SlotX,
-        [int]$porta1,
-        [int]$porta2,
-        [int]$porta3,
-        [int]$porta4,
-        [int]$porta5
+        [int[]]$porte
     )
 
     $ServiceAccountCredential = Get-Credential
-    New-NAVServerInstance -ManagementServicesPort $porta1 -ServerInstance $ServerTestInstance -ClientServicesCredentialType UserName -ClientServicesPort $porta2 -DatabaseName $SlotX -DatabaseServer sv-dbbc-test.cpgnet.local -DeveloperServicesPort $porta3 -ODataServicesPort $porta4 -ServiceAccount User -ServiceAccountCredential $ServiceAccountCredential -SOAPServicesPort $porta5
+    New-NAVServerInstance -ManagementServicesPort $porte[0] -ServerInstance $ServerTestInstance -ClientServicesCredentialType UserName -ClientServicesPort $porte[1] -DatabaseName $SlotX -DatabaseServer sv-dbbc-test.cpgnet.local -DeveloperServicesPort $porte[2] -ODataServicesPort $porte[3] -ServiceAccount User -ServiceAccountCredential $ServiceAccountCredential -SOAPServicesPort $porte[4]
 
     Set-NAVServerConfiguration -KeyName DatabaseInstance -ServerInstance $ServerTestInstance 
     Set-NAVServerConfiguration -KeyName DefaultLanguage -ServerInstance $ServerTestInstance -KeyValue it-IT
@@ -57,40 +53,48 @@ function New-MyConfiguredNavInstance {
     Set-NAVServerConfiguration -KeyName EnableTaskScheduler -ServerInstance $ServerTestInstance -KeyValue false 
 
     # attualmente esiste 1 sola macchina quindi testdnt2 non esiste
-    New-NAVWebServerInstance -Server sv-srv-testdnt.cpgnet.local -ServerInstance $ServerTestInstance -WebServerInstance $ServerTestInstance -ClientServicesCredentialType UserName -ClientServicesPort $porta2 -ContainerSiteName "Microsoft Dynamics 365 Business Central Web Client" -PublishFolder "C:\Program Files\Microsoft Dynamics 365 Business Central\210\Web Client\WebPublish" -SiteDeploymentType SubSite 
+    New-NAVWebServerInstance -Server sv-srv-testdnt.cpgnet.local -ServerInstance $ServerTestInstance -WebServerInstance $ServerTestInstance -ClientServicesCredentialType UserName -ClientServicesPort $porte[1] -ContainerSiteName "Microsoft Dynamics 365 Business Central Web Client" -PublishFolder "C:\Program Files\Microsoft Dynamics 365 Business Central\210\Web Client\WebPublish" -SiteDeploymentType SubSite 
     Set-NAVWebServerInstanceConfiguration -WebServerInstance $ServerTestInstance -KeyName Designer -KeyValue false
 }
 
+function Get-MyNavConfiguration{
+    do {
+        $ServerTestInstance = Read-Host "Inserisci il nome dell'istanza del server di test (Nel formato TESTNOMEAZIENDA)"
+        $ServerTestInstance = $ServerTestInstance.ToUpper()
+        $SlotNumber = Read-Host "Inserisci lo slot nel quale inserire il DB (solo il numero)"
+        
+        $automatic = $false
+        if($SlotNumber -eq ''){
+            $automatic = $true
+        }
+        
+        $porte = @()
 
-do {
-    $ServerTestInstance = Read-Host "Inserisci il nome dell'istanza del server di test (Nel formato TESTNOMEAZIENDA)"
-    $ServerTestInstance = $ServerTestInstance.ToUpper()
-    $SlotNumber = Read-Host "Inserisci lo slot nel quale inserire il DB (solo il numero)"
+        if($automatic){
+            $SlotX = Get-AutomaticNextSlot;
+            $porte += Get-AutomaticNextFirstPort($SlotX);
+        }else{
+            $SlotX = "DNT"+$SlotNumber
+            $porte += [int] (Read-Host "Inserisci la prima porta")
+        }
+        
+        1..4 | ForEach-Object {
+            $porte += $porte[0] + $_
+        }
     
-    $automatic = $false
-    if($SlotNumber -eq ''){
-        $automatic = $true
-    }
+        # Richiedi conferma all'utente
+        $primaPorta = $porte[0]
+        $ultimaPorta = $porte[4]
+        $risposta = Read-Host "Ti creo $ServerTestInstance con le porte da $primaPorta a $ultimaPorta, usando lo SLOT DB $SlotX confermi? (S (Si) / N (No))" -ErrorAction Stop
+    } while ($risposta -ne "S")
 
-    if($automatic){
-        $SlotX = Get-AutomaticNextSlot;
-        $porta1 = Get-AutomaticNextFirstPort($SlotX);
-    }else{
-        $SlotX = "DNT"+$SlotNumber
-        $porta1 = [int]$porta1 = Read-Host "Inserisci la porta1"
-    }
-    
-    $porta2 = $porta1 + 1
-    $porta3 = $porta2 + 1
-    $porta4 = $porta3 + 1
-    $porta5 = $porta4 + 1
+    return $ServerTestInstance, $SlotX, $porte
+}
 
-    # Richiedi conferma all'utente
-    $risposta = Read-Host "Ti creo $ServerTestInstance con le porte da $porta1 a $porta5, usando lo SLOT DB $SlotX confermi? (S (Si) / N (No))" -ErrorAction Stop
-} while ($risposta -ne "S")
-
-New-MyConfiguredNavInstance($ServerTestInstance, $SlotX, $porta1, $porta2, $porta3, $porta4, $porta5)
+# TODO check 
+$val = Get-MyNavConfiguration
+New-MyConfiguredNavInstance @val
 
 # documento sul file
-$informazioni = "$SlotX`t$ServerTestInstance`t$porta1-$porta5"
+$informazioni = "$SlotX`t$ServerTestInstance`t$porte[0]-$porte[4]"
 Add-Content -Path $PORTEMD -Value $informazioni
