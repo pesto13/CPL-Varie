@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+import ExcelManager
 
 class XmlManager:
     def __init__(self, filename):
@@ -9,10 +10,9 @@ class XmlManager:
         for parent_tag in self.root.findall(parent_tag_name):
             tag1 = parent_tag.find('.//' + first_tag_name)
             tag2 = parent_tag.find('.//' + second_tag_name)
-            print(tag1.text)
-            tag1.text = 'lol'
-            tag2.text = 'ciao'
-            print(tag1.text)
+            
+            if tag1 is not None and tag2 is not None:
+                tag1.text, tag2.text = ExcelManager.validate_dates(tag1.text, tag2.text)
         
         self.tree.write('questo2.xml')
 
