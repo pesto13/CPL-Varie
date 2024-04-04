@@ -60,14 +60,14 @@ function Get-MyNavConfiguration{
         $ServerTestInstance = $ServerTestInstance.ToUpper()
         $SlotNumber = Read-Host "Inserisci lo slot nel quale inserire il DB (solo il numero)"
         
-        $automatic = $false
+        $isAutomatic = $false
         if($SlotNumber -eq ''){
-            $automatic = $true
+            $isAutomatic = $true
         }
         
         $porte = @()
 
-        if($automatic){
+        if($isAutomatic){
             $SlotX = Get-AutomaticNextSlot;
             $porte += Get-AutomaticNextFirstPort($SlotX);
         }else{
