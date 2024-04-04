@@ -1,5 +1,6 @@
 import os
 import shutil
+import XmlManager
 
 
 def remove_old_zip(starting_folder):
@@ -53,9 +54,19 @@ def rename_all(starting_folder):
                 os.rename(old_file_path, new_file_path)
             
  
-# Esegui la funzione con la cartella di partenza desiderata
+
+def modify_all(starting_folder):
+    for root, dirs, files in os.walk(starting_folder):
+        for file in files:
+            if file.endswith('_2_M.xml'):
+                file_path = os.path.join(root, file)
+                XmlManager.XmlManager(file_path)
+
+
 starting_folder = "NEXTCLOUD"
+
 decompress_folder(starting_folder)
 rename_all(starting_folder)
+modify_all(starting_folder)
 compress_folder(starting_folder)
 remove_old_zip(starting_folder)
