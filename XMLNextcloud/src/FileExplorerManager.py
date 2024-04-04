@@ -60,7 +60,9 @@ def modify_all(starting_folder):
         for file in files:
             if file.endswith('_2_M.xml'):
                 file_path = os.path.join(root, file)
-                XmlManager.XmlManager(file_path)
+                print(file_path)
+                e=XmlManager.XmlManager(file_path)
+                e.check_and_update_data()
 
 
 starting_folder = "NEXTCLOUD"
