@@ -60,15 +60,24 @@ def modify_all(starting_folder):
         for file in files:
             if file.endswith('_2_M.xml'):
                 file_path = os.path.join(root, file)
-                print(file_path)
                 e=XmlManager.XmlManager(file_path)
                 e.check_and_update_data()
 
+def move_zip_into_pool(starting_folder, pool_folder):
+    if not os.path.exists(pool_folder):
+        os.makedirs(pool_folder)
+
+    for root, dirs, files in os.walk(starting_folder):
+        for file in files:
+            if file.endswith('_2_M.zip'):
+                shutil.copyfile(os.path.join(root, file), os.path.join(pool_folder, file))
 
 starting_folder = "NEXTCLOUD"
+pool_folder = "POOL"
 
 decompress_folder(starting_folder)
 rename_all(starting_folder)
 modify_all(starting_folder)
 compress_folder(starting_folder)
 remove_old_zip(starting_folder)
+move_zip_into_pool(starting_folder, pool_folder)
