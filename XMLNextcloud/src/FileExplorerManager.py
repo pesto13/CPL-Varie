@@ -64,9 +64,25 @@ def move_zip_into_pool(starting_folder, pool_folder):
                 shutil.copyfile(os.path.join(root, file), os.path.join(pool_folder, file))
 
 
-# def replace_flusso(starting_folder):
+def replace_flusso(starting_folder):
+    for root, dirs, files in os.walk(starting_folder):
+        for file in files:
+            if file.endswith('_2_M.xml'):
+                filename = os.path.join(root, file)
+                replace_flusso_in_file(filename)
 
+def replace_flusso_in_file(filename):
+    with open(filename, 'r') as f:
+        lines = f.readlines()
 
+    with open(filename, 'w') as f:
+        for line in lines:
+            # Trova la riga che contiene <FlussoMisure cod_flusso="TML">
+            if '<FlussoMisure cod_flusso="TML">' in line:
+                # Sostituisci con <FlussoMisure xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" cod_flusso="TML">
+                line = line.replace('<FlussoMisure cod_flusso="TML">', '<FlussoMisure xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" cod_flusso="TML">')
+            f.write(line)
+                
 
 starting_folder = "NEXTCLOUD"
 pool_folder = "POOL"
@@ -76,7 +92,7 @@ XmlManager.XmlManager.clear_logging_file()
 decompress_folder(starting_folder)
 rename_all(starting_folder)
 modify_all(starting_folder)
-# replace_flusso(starting_folder)
+replace_flusso(starting_folder)
 compress_folder(starting_folder)
 remove_old_zip(starting_folder)
 move_zip_into_pool(starting_folder, pool_folder)
