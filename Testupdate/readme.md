@@ -6,6 +6,12 @@ Lo scopo è quello di poter creare un ambiente per specifico cliente.
 L'ambiente viene creato di notte con la migrazione del DB sullo specifico slot e si aggancia ai servizi già creati sulla macchina windows.
 Esistono 7 ambienti per quanto riguarda dinetwork, possono essere operativi 7 diversi ambienti contemporaneamente.
 
+## INFO
+```sv-dbbc-test.cpgnet.local```   Database
+```sv-srv-testdnt.cpgnet.local``` Servizio
+```SV-TESTUPDT-DB.CPGNET.LOCAL``` Database Dismesso (non mi fa accedere)
+
+
 ### Problema
 Con aumento dei clienti maggiori sovrapposioni di clienti sullo stesso slot si avranno. Potrebbe essere necessario spostare un cliente in uno slot diverso.
 Ora come ora i clienti sullo stesso slot si contendono le medesime porte.
