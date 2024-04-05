@@ -24,7 +24,7 @@ class ExcelManager:
     @staticmethod
     def validate_dates(data1, data2):
         if ExcelManager._data is not None:
-           for row in ExcelManager._data:
+            for row in ExcelManager._data:
                 d1 = row[COL1].date().strftime('%d/%m/%Y')
                 d2 = row[COL2].date().strftime('%d/%m/%Y')
                 d3 = row[COL3].date().strftime('%d/%m/%Y')
@@ -32,4 +32,5 @@ class ExcelManager:
 
                 if(data1 == d1 and data2 == d2):
                     return d3, d4
-                return d1, d2
+                
+            return data1, data2
