@@ -11,12 +11,12 @@ class ExcelManager:
 
     _data = None
 
-    def __init__(self) -> None:
+    def initialize(filename=EXCELFILE):
         if ExcelManager._data is None:
-            ExcelManager._data = ExcelManager._read_excel()
+            ExcelManager._data = ExcelManager._read_excel(filename)
 
     @staticmethod
-    def _read_excel(filename=EXCELFILE):
+    def _read_excel(filename):
         xls = pd.ExcelFile(filename) 
         sheet = xls.parse(0)
         return sheet.to_dict(orient='records')
@@ -32,3 +32,4 @@ class ExcelManager:
 
                 if(data1 == d1 and data2 == d2):
                     return d3, d4
+                return d1, d2
