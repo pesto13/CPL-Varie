@@ -1,4 +1,5 @@
+src/__pycache__/*
 NEXTCLOUD/*
 POOL/*
 questo*
-src/__pycache__/*
+loggingFile.txt

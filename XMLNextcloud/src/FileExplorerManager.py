@@ -64,14 +64,19 @@ def move_zip_into_pool(starting_folder, pool_folder):
                 shutil.copyfile(os.path.join(root, file), os.path.join(pool_folder, file))
 
 
+# def replace_flusso(starting_folder):
+
+
+
 starting_folder = "NEXTCLOUD"
 pool_folder = "POOL"
 
 ExcelManager.ExcelManager.initialize()
-
+XmlManager.XmlManager.clear_logging_file()
 decompress_folder(starting_folder)
 rename_all(starting_folder)
 modify_all(starting_folder)
+# replace_flusso(starting_folder)
 compress_folder(starting_folder)
 remove_old_zip(starting_folder)
 move_zip_into_pool(starting_folder, pool_folder)
