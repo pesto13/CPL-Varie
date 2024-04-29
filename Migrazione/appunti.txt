@@ -1,0 +1,32 @@
+Istruzioni per la generazione: file doc 
+
+File di pre:
+Bisonga avere 
+DROP CONSTRAINT 
+DROP INDEX 
+DROP VIEW 
+ADD CONSTRAINT DEFAULT  
+Da moficare 
+Modificare '00000000-0000-0000-0000-000000000000' con newsequentialid() 
+
+Eliminare: 
+CREATE TABLE: SET\s+ANSI_NULLS\s+ON[\s\S]*?\n\)\sON \[PRIMARY\] 
+DROP TABLE: ^IF  EXISTS\s.*|^DROP\sTABLE\s.* 
+ADD DEFAULT: .*ADD\s\sDEFAULT.* 
+EXEC: ^EXEC\s.* 
+CREATE index 
+CREATE view 
+REGEX COMPLETO: 
+SET\s+ANSI_NULLS\s+ON[\s\S]*?\n\)\sON \[PRIMARY\]|^IF  EXISTS\s.*|^DROP\sTABLE\s.*|.*ADD\s\sDEFAULT.*|^EXEC\s.*|TEXTIMAGE_ON \[PRIMARY\]|CREATE\sNONCLUSTERED\sINDEX\s([\s\S]*?)ON\s\[PRIMARY\]|CREATE\sUNIQUE\sNONCLUSTERED\sINDEX\s([\s\S]*?)ON\s\[PRIMARY\]|CREATE\sUNIQUE\sCLUSTERED\sINDEX\s([\s\S]*?)ON\s\[PRIMARY\]|SET\sANSI_PADDING\sON 
+
+
+File di post: 
+Bisonga avere 
+CREATE VIEW 
+CREATE INDEX 
+Da modificare 
+SORT_IN_TEMPDB = OFF da portare a ON
+
+
+
+https://cplconcordia-my.sharepoint.com/:w:/r/personal/fbellodi_cpl_it/_layouts/15/Doc.aspx?sourcedoc=%7BAB7C6B8C-6974-48F3-BE5D-B0AF765FD9DA%7D&file=documentazione%20migrazione.docx&action=default&mobileredirect=true
