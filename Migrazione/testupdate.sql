@@ -8,6 +8,7 @@ update [COMPANYNAME$NDMDistr-Gas Setup$e895c92b-9469-4077-90be-6e4be122c7a0]
 set [Changes File Path] = replace([Changes File Path], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\'),
 	[SII Reading Sending Path] = replace([SII Reading Sending Path], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\')
 
+
 -- setup servizi
 update [COMPANYNAME$NDMServices Quality Setup$e895c92b-9469-4077-90be-6e4be122c7a0]
 set [V_D Sending Path] = replace([V_D Sending Path], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\'),
@@ -23,18 +24,20 @@ set [V_D Sending Path] = replace([V_D Sending Path], 'fatture$\COMPANY_NAME\', '
     [PercorsoPraticheLegali] = replace([PercorsoPraticheLegali], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\'),
     [URLDocumentiPortale] = replace([URLDocumentiPortale], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\'),
 
+
 -- venditori
 update [COMPANYNAME$NDMGas Vendor$80210a5a-2b85-4c29-95f9-64117945258f]
 set [Path_Cart_Doc] = replace([Path_Cart_Doc], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\')
 
 
--- Fatturazione Elettronica?
+-- Fatturazione Elettronica
 update [COMPANYNAME$NDMDocument Sending Setup$73a7b05d-98d4-4dc6-bad2-8341e12da117]
 set [XML Path] = replace([XML Path], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\'),
 	[XML Test Path] = replace([XML Test Path], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\'),
 	[Archive XML Path] = replace([Archive XML Path], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\'),
 	[PDF Path] = replace([PDF Path], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\'),
 	[Alternative PDF Path] = replace([Alternative PDF Path], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\')
+
 
 update [COMPANYNAME$NDMDocument Sending Setup 2$73a7b05d-98d4-4dc6-bad2-8341e12da117]
 set [Detailed PDF Path] = replace([Detailed PDF Path], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\'),
