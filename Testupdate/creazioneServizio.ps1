@@ -1,5 +1,5 @@
 Import-Module 'C:\Program Files\Microsoft Dynamics 365 Business central\210\Service\NavAdminTool.ps1' 
-Import-Module 'C:\Program Files\Microsoft Dynamics 365 Business Central\210\Web Client\Modules\NAVWebClientManagement\NAVWebClientManagement.psm1' 
+# Import-Module 'C:\Program Files\Microsoft Dynamics 365 Business Central\210\Web Client\Modules\NAVWebClientManagement\NAVWebClientManagement.psm1' 
 
 $PORTEMD = 'porte.md'
 $DEFULT_SLOT_PORT = 'defaultSlotPort.json'
@@ -22,7 +22,7 @@ function Get-AutomaticNextSlot {
 }
 
 function Get-AutomaticNextFirstPort {
-    # Restuisce la porta di defualt associata allo slot specificato
+    # Restuisce la porta di default associata allo slot specificato
     param (
         [string]$SlotX
     )
@@ -99,7 +99,7 @@ function Write-FilePorte {
     Add-Content -Path $PORTEMD -Value $informazioni
 }
 
-# TODO check 
+
 $val = Get-MyNavConfiguration
 New-MyConfiguredNavInstance @val
 Write-FilePorte @val
