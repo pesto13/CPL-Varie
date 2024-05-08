@@ -1,7 +1,5 @@
--- setup au
--- setup servizi
--- le schede dei venditori
--- il setup della fatturazione elettronica
+-- Questo file viene utilizzato per migrazione del percorso da cliente 21 a 21.
+-- Serve solo per aggiornare i percorsi mettendo DATI
 
 -- setup AU
 update [COMPANYNAME$NDMDistr-Gas Setup$e895c92b-9469-4077-90be-6e4be122c7a0]
@@ -27,7 +25,7 @@ set [V_D Sending Path] = replace([V_D Sending Path], 'fatture$\COMPANY_NAME\', '
 
 -- venditori
 update [COMPANYNAME$NDMGas Vendor$80210a5a-2b85-4c29-95f9-64117945258f]
-set [Path_Cart_Doc] = replace([Path_Cart_Doc], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\')
+set [Path_Cart_Doc] = replace([Path_Cart_Doc], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\') where Tipo = '1'
 
 
 -- Fatturazione Elettronica
@@ -44,3 +42,8 @@ set [Detailed PDF Path] = replace([Detailed PDF Path], 'fatture$\COMPANY_NAME\',
 	[PDF Path Paper Purchases] = replace([PDF Path Paper Purchases], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\'),
 	[Reminder Attachments Path] = replace([Reminder Attachments Path], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\'),
 	[PEC XML Backup Path] = replace([PEC XML Backup Path], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\')
+
+
+update [COMPANYNAME$NDMLog File Export$e895c92b-9469-4077-90be-6e4be122c7a0]
+set [FileName] = replace([FileName], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\')
+set [File Path] = replace([File Path], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\')

@@ -1,6 +1,6 @@
 -- REPLACE_CLIENTE va cambiato con il nome del cliente sul DB ad esempio SGDISTRIBUZIONE
 -- RPL va cambiato con le 3 lettere del cliente, ad esempio [soc, ver]
-
+-- File migrazione da 14 a 21
 
 Use [REPLACE_CLIENTE]
 
