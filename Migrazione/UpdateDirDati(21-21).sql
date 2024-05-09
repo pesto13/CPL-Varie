@@ -45,5 +45,5 @@ set [Detailed PDF Path] = replace([Detailed PDF Path], 'fatture$\COMPANY_NAME\',
 
 
 update [COMPANYNAME$NDMLog File Export$e895c92b-9469-4077-90be-6e4be122c7a0]
-set [FileName] = replace([FileName], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\')
-set [File Path] = replace([File Path], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\')
+set [FileName] = replace([FileName], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\'),
+	[File Path] = replace([File Path], 'fatture$\COMPANY_NAME\', 'fatture$\COMPANY_NAME\DATI\')
