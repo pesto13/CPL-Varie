@@ -1,13 +1,12 @@
 import os
 import shutil
-import ExcelManager
 import XmlManager
 
 
 def remove_old_zip(starting_folder):
     for root, dirs, files in os.walk(starting_folder):
         for file in files:
-            if file.endswith('_1_M.zip'):
+            if file.endswith('_1_M.zip') or file.endswith('_1.zip'):
                 file_path = os.path.join(root, file)
                 os.remove(file_path)
 
@@ -18,6 +17,11 @@ def compress_folder(starting_folder):
             if dir_name.endswith('_1_M'):
                 folder_path = os.path.join(root, dir_name)
                 zip_path = os.path.join(root, dir_name.replace('_1_M', '_2_M'))
+                shutil.make_archive(zip_path, 'zip', folder_path)
+                shutil.rmtree(folder_path)
+            elif dir_name.endswith('_1'):
+                folder_path = os.path.join(root, dir_name)
+                zip_path = os.path.join(root, dir_name.replace('_1', '_2'))
                 shutil.make_archive(zip_path, 'zip', folder_path)
                 shutil.rmtree(folder_path)
 
@@ -43,7 +47,10 @@ def rename_all(starting_folder):
                 old_file_path = os.path.join(root, file)
                 new_file_path = os.path.join(root, file.replace('_1_M.xml', '_2_M.xml'))
                 os.rename(old_file_path, new_file_path)
-
+            if file.endswith('_1.xml'):
+                old_file_path = os.path.join(root, file)
+                new_file_path = os.path.join(root, file.replace('_1.xml', '_2.xml'))
+                os.rename(old_file_path, new_file_path)
 
 def modify_all(starting_folder):
     for root, dirs, files in os.walk(starting_folder):
@@ -53,6 +60,23 @@ def modify_all(starting_folder):
                 e=XmlManager.XmlManager(file_path)
                 e.check_and_update_data()
 
+def modify_all_secondo(starting_folder):
+    for root, dirs, files in os.walk(starting_folder):
+        for file in files:
+            if file.endswith('_2.xml'):
+                file_path = os.path.join(root, file)
+                e=XmlManager.XmlManager(file_path)
+                data = e.add_value_to_tag_data_misura()
+
+                with open(file_path, 'r') as f:
+                    lines = f.readlines()
+
+                with open(file_path, 'w') as f:
+                    for line in lines:
+                        if '<data_misura />' in line:
+                            line = line.replace('<data_misura />', f'<data_misura>{data}<data_misura />')
+                        f.write(line)
+                
 
 def move_zip_into_pool(starting_folder, pool_folder):
     if not os.path.exists(pool_folder):
@@ -60,14 +84,13 @@ def move_zip_into_pool(starting_folder, pool_folder):
 
     for root, dirs, files in os.walk(starting_folder):
         for file in files:
-            if file.endswith('_2_M.zip'):
+            if file.endswith('_2_M.zip') or file.endswith('_2.zip'):
                 shutil.copyfile(os.path.join(root, file), os.path.join(pool_folder, file))
-
 
 def replace_flusso(starting_folder):
     for root, dirs, files in os.walk(starting_folder):
         for file in files:
-            if file.endswith('_2_M.xml'):
+            if file.endswith('_2_M.xml') or file.endswith('_2.xml'):
                 filename = os.path.join(root, file)
                 replace_flusso_in_file(filename)
 
@@ -82,18 +105,3 @@ def replace_flusso_in_file(filename):
                 # Sostituisci con <FlussoMisure xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" cod_flusso="TML">
                 line = line.replace('<FlussoMisure cod_flusso="TML">', '<FlussoMisure xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" cod_flusso="TML">')
             f.write(line)
-                
-
-starting_folder = "NEXTCLOUD"
-pool_folder = "POOL"
-
-ExcelManager.ExcelManager.initialize()
-XmlManager.XmlManager.clear_logging_file()
-
-decompress_folder(starting_folder)
-rename_all(starting_folder)
-modify_all(starting_folder)
-replace_flusso(starting_folder)
-compress_folder(starting_folder)
-remove_old_zip(starting_folder)
-move_zip_into_pool(starting_folder, pool_folder)

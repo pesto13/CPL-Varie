@@ -21,6 +21,12 @@ class XmlManager:
         self.tree.write(self.filename)
         self._add_xml_header()
 
+    def add_value_to_tag_data_misura(self, parent_tag_name='DatiPdR', find_tag='data_inst_mis'):
+        for parent_tag in self.root.findall(parent_tag_name):
+            tag_data_misura = parent_tag.find('.//' + find_tag)
+            print(tag_data_misura.text)
+
+        return tag_data_misura.text
 
     def _add_xml_header(self):
         with open(self.filename, 'r+') as f:
