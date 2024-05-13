@@ -1,4 +1,4 @@
-import pandas as pd
+import pandas
 
 EXCELFILE = 'CasisticaDate.xls'
 
@@ -17,7 +17,7 @@ class ExcelManager:
 
     @staticmethod
     def _read_excel(filename):
-        xls = pd.ExcelFile(filename) 
+        xls = pandas.ExcelFile(filename) 
         sheet = xls.parse(0)
         return sheet.to_dict(orient='records')
 
