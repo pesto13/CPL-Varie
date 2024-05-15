@@ -15,7 +15,7 @@ NEW_LINE='<FlussoMisure xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" co
 ExcelManager.initialize()
 fem = FileExplorerManager('_1_M', STARTING_FOLDER)
 fem.decompress_folder()
-# fem.remove_old_zip()
+fem.remove_old_zip()
 fem.rename_all()
 fem.modify_all_ex1()
 fem.replace_line_all_file(OLD_LINE, NEW_LINE)
