@@ -16,11 +16,11 @@ class XmlManager:
                 # before = [tag1.text, tag2.text]
                 tag1.text, tag2.text = ExcelManager.ExcelManager.validate_dates(tag1.text, tag2.text)
                 # after = [tag1.text, tag2.text]
-                # XmlManager._logging(before, after)
+                # XmlManager._log(before, after)
             
         self.tree.write(self.filename)
         self._add_xml_header()
-
+    
     def add_value_to_tag_data_misura(self, parent_tag_name='DatiPdR', find_tag='data_inst_mis'):
         for parent_tag in self.root.findall(parent_tag_name):
             tag_data_misura = parent_tag.find('.//' + find_tag)
@@ -35,12 +35,12 @@ class XmlManager:
             f.write('<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' + content)
 
     @staticmethod
-    def clear_logging_file():
+    def clear_log_file():
         open('loggingFile.txt', 'w').close()
 
     @staticmethod
-    def _logging(before, after):
-        with open('loggingFile.txt', 'a') as f:
+    def _log(before, after):
+        with open('logFile.txt', 'a') as f:
             f.write(f'{before[0]}  {before[1]}\n')
             f.write(f'{after[0]}  {after[1]}\n')
             f.write('==================')
