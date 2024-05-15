@@ -1,16 +1,23 @@
-import myutils
+"""script used for add tag value
 
-starting_folder = "SECONDO"
-pool_folder = "SECONDO_POOL"
+Vanessa asked for it(ex2)"""
 
+from myutils import FileExplorerManager
 
+STARTING_FOLDER = "SECONDO"
+POOL_FOLDER = "SECONDO_POOL"
 
-myutils.decompress_folder(starting_folder)
-# myutils.remove_old_zip(starting_folder)
-myutils.rename_all(starting_folder)
+OLD_LINE='<FlussoMisure cod_flusso="TML">'
+NEW_LINE='<FlussoMisure xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" cod_flusso="TML">'
 
-myutils.modify_all_secondo(starting_folder)
-myutils.replace_flusso(starting_folder)
+fem = FileExplorerManager('', STARTING_FOLDER, POOL_FOLDER)
 
-myutils.compress_folder(starting_folder)
-myutils.move_zip_into_pool(starting_folder, pool_folder)
+fem.decompress_folder()
+# fem.remove_old_zip()
+fem.rename_all()
+
+fem.modify_all_secondo()
+fem.replace_line_all_file(OLD_LINE, NEW_LINE)
+
+fem.compress_folder()
+fem.move_zip_into_pool(POOL_FOLDER)
