@@ -74,7 +74,7 @@ def modify_all_secondo(starting_folder):
                 with open(file_path, 'w') as f:
                     for line in lines:
                         if '<data_misura />' in line:
-                            line = line.replace('<data_misura />', f'<data_misura>{data}<data_misura />')
+                            line = line.replace('<data_misura />', f'<data_misura>{data}</data_misura>')
                         f.write(line)
                 
 
