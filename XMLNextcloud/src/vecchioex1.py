@@ -82,13 +82,13 @@ def replace_flusso_in_file(filename):
                 # Sostituisci con <FlussoMisure xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" cod_flusso="TML">
                 line = line.replace('<FlussoMisure cod_flusso="TML">', '<FlussoMisure xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" cod_flusso="TML">')
             f.write(line)
-                
+
 
 starting_folder = "NEXTCLOUD"
 pool_folder = "POOL"
 
 ExcelManager.ExcelManager.initialize()
-XmlManager.XmlManager.clear_logging_file()
+XmlManager.XmlManager.clear_log_file()
 
 decompress_folder(starting_folder)
 rename_all(starting_folder)

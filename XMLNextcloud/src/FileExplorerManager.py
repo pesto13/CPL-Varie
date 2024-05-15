@@ -8,13 +8,12 @@ import XmlManager
 class FileExplorerManager:
     """Class for interact with the OS"""
 
-    def __init__(self, ends_with, starting_folder, pool_folder):
+    def __init__(self, ends_with, starting_folder):
         # ends_with prende tipo _1M oppure 1_M. Dipende
         self.ends_with = ends_with
         #TODO potrebbe essere meglio
         self.new_ends_with = self.ends_with.replace('1', '2')
         self.starting_folder = starting_folder
-        pool_folder = pool_folder
 
 
     def decompress_folder(self):

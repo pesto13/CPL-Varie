@@ -2,7 +2,7 @@
 
 Vanessa asked for it(ex2)"""
 
-from myutils import FileExplorerManager
+from FileExplorerManager import FileExplorerManager
 
 STARTING_FOLDER = "SECONDO"
 POOL_FOLDER = "SECONDO_POOL"
@@ -10,7 +10,7 @@ POOL_FOLDER = "SECONDO_POOL"
 OLD_LINE='<FlussoMisure cod_flusso="TML">'
 NEW_LINE='<FlussoMisure xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" cod_flusso="TML">'
 
-fem = FileExplorerManager('', STARTING_FOLDER, POOL_FOLDER)
+fem = FileExplorerManager('', STARTING_FOLDER)
 
 fem.decompress_folder()
 # fem.remove_old_zip()
