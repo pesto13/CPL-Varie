@@ -14,7 +14,8 @@ class ExcelManager:
 
     _data = None
 
-    def initialize(self, filename=EXCELFILE):
+    @staticmethod
+    def initialize(filename=EXCELFILE):
         """Reads the excel file and set is a class variable"""
         if ExcelManager._data is None:
             ExcelManager._data = ExcelManager.__read_excel(filename)

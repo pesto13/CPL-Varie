@@ -11,7 +11,6 @@ class FileExplorerManager:
     def __init__(self, ends_with, starting_folder):
         # ends_with prende tipo _1M oppure 1_M. Dipende
         self.ends_with = ends_with
-        #TODO potrebbe essere meglio
         self.new_ends_with = self.ends_with.replace('1', '2')
         self.starting_folder = starting_folder
 
@@ -69,13 +68,13 @@ class FileExplorerManager:
             for dir_name in dirs:
                 if dir_name.endswith(self.ends_with):
                     folder_path = os.path.join(root, dir_name)
-                    zip_path = os.path.join(root, dir_name.replace(self.ends_with,
-                                                                   self.new_ends_with))
+                    zip_path = os.path.join(root, dir_name.rsplit(self.ends_with, 1)[0]
+                                                    +self.new_ends_with)
                     shutil.make_archive(zip_path, 'zip', folder_path)
                     shutil.rmtree(folder_path)
 
 
-    def modify_all(self):
+    def modify_all_ex1(self):
         # TODO
         """Updates dates according to Excel file.
 
@@ -89,27 +88,20 @@ class FileExplorerManager:
                     e.check_and_update_data()
 
 
-    def modify_all_secondo(self):
+    def modify_all_ex2(self):
         # TODO
-        """Updates xml tag according to the TODO.
+        """Updates xml tag according to the latter below tag<data_inst_mis>.
 
-        That's the core of the Activity.
+        That's the core of the Activity 2.
         """
         for root, _, files in os.walk(self.starting_folder):
             for file in files:
                 if file.endswith(self.new_ends_with+'.xml'):
                     file_path = os.path.join(root, file)
                     e=XmlManager.XmlManager(file_path)
-                    data = e.add_value_to_tag_data_misura()
-
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        lines = f.readlines()
-
-                    with open(file_path, 'w', encoding='utf-8') as f:
-                        for line in lines:
-                            line = line.replace('<data_misura />',
+                    data = e.find_tag_value('data_inst_mis')
+                    self.__replace_line_in_file(file_path, '<data_misura />',
                                                 f'<data_misura>{data}</data_misura>')
-                            f.write(line)
 
 
     def move_zip_into_pool(self, pool_folder):

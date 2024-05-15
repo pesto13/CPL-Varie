@@ -1,7 +1,7 @@
 """Module for interact with xml Files"""
 
 import xml.etree.ElementTree as ET
-import ExcelManager
+from ExcelManager import ExcelManager
 
 class XmlManager:
     """Class for interact with xml Files"""
@@ -25,27 +25,25 @@ class XmlManager:
 
             if tag1 is not None and tag2 is not None:
                 # before = [tag1.text, tag2.text]
-                tag1.text, tag2.text = ExcelManager.ExcelManager.validate_dates(tag1.text,
+                tag1.text, tag2.text = ExcelManager.validate_dates(tag1.text,
                                                                                 tag2.text)
                 # after = [tag1.text, tag2.text]
                 # XmlManager._log(before, after)
 
         self.tree.write(self.filename)
-        self._add_xml_header()
+        self.__add_xml_header()
 
 
-    def add_value_to_tag_data_misura(self, parent_tag_name='DatiPdR', find_tag='data_inst_mis'):
+    def find_tag_value(self, find_tag, parent_tag_name='DatiPdR'):
         """Add a tag and his value
         
         Main function used for the XMLNEXTCLOUD (ex2)
         """
-        for parent_tag in self.root.findall(parent_tag_name):
-            tag_data_misura = parent_tag.find('.//' + find_tag)
-            # print(tag_data_misura.text)
+        assert find_tag is not None
+        return self.root.find(parent_tag_name).find('.//' + find_tag).text
 
-        return tag_data_misura.text
 
-    def _add_xml_header(self):
+    def __add_xml_header(self):
         with open(self.filename, 'r+', encoding='utf-8') as f:
             content = f.read()
             f.seek(0, 0)
@@ -57,6 +55,7 @@ class XmlManager:
     def clear_log_file():
         """Clear log file"""
         open('loggingFile.txt', 'w', encoding='utf-8').close()
+
 
     @staticmethod
     def _log(before, after):
