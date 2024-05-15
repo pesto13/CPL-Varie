@@ -1,0 +1,74 @@
+--nas
+New-NAVServerUser -FullName 'Utente NAS' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\nasPROTOS'-LicenseType 'Full'
+
+--distribuzione
+New-NAVServerUser -FullName 'Matteo Tartari' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\tartarim'-LicenseType 'Full'
+New-NAVServerUser -FullName 'Giulia Bartolini' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\bartolinig'-LicenseType 'Full' -State 'Disabled'
+New-NAVServerUser -FullName 'Vanessa Forlani' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\forlaniv'-LicenseType 'Full'
+New-NAVServerUser -FullName 'Marco Strazzi' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\strazzim'-LicenseType 'Full' -State 'Disabled'
+New-NAVServerUser -FullName 'Sara Poli' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\polis'-LicenseType 'Full' -State 'Disabled'
+New-NAVServerUser -FullName 'Saverio Lasagna' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\lasagnas'-LicenseType 'Full'
+
+--contabilità
+New-NAVServerUser -FullName 'Monica Benetti' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\benettim'-LicenseType 'Full'
+New-NAVServerUser -FullName 'Luana Lodi' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\lodil'-LicenseType 'Full' -State 'Disabled'
+New-NAVServerUser -FullName 'Giovanni Cantone' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\cantoneg'-LicenseType 'Full'
+New-NAVServerUser -FullName 'Francesca Mantelli' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\mantellif'-LicenseType 'Full' -State 'Disabled'
+
+--programmatori
+New-NAVServerUser -FullName 'Jacopo Mozzarelli' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\mozzarellij'-LicenseType 'Full'
+New-NAVServerUser -FullName 'Francesco Bellodi' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\bellodif'-LicenseType 'Full' -State 'Disabled'
+New-NAVServerUser -FullName 'Marco Valente' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\valentem' -LicenseType 'Full'
+New-NAVServerUser -FullName 'Alberto Sani' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\sania'-LicenseType 'Full' -State 'Disabled'
+New-NAVServerUser -FullName 'Luca Tacinelli' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\tacinellil'-LicenseType 'Full' -State 'Disabled'
+New-NAVServerUser -FullName 'Gianni Marchelletta' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\marchellettag'-LicenseType 'Full' -State 'Disabled'
+New-NAVServerUser -FullName 'Mattia Cadeddu' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\cadeddum'-LicenseType 'Full' -State 'Disabled'
+New-NAVServerUser -FullName 'Riccardo Gilioli' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\giliolir'-LicenseType 'Full' -State 'Disabled'
+New-NAVServerUser -FullName 'Riccardo Gilioli' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\gilioliriccardo'-LicenseType 'Full' -State 'Disabled'
+New-NAVServerUser -FullName 'Francesco DegliEsposti' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\degliespostif'-LicenseType 'Full' -State 'Disabled'
+
+New-NAVServerUser -FullName 'Katy Pierangeli' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\pierangelik'-LicenseType 'Full'
+New-NAVServerUser -FullName 'Edoardo Iommi' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\iommie'-LicenseType 'Full'
+New-NAVServerUser -FullName 'Lorenzo Eleuteri' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\eleuteril'-LicenseType 'Full' -State 'Disabled'
+New-NAVServerUser -FullName 'Michele Mancinelli' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\mancinellim'-LicenseType 'Full' -State 'Disabled'
+
+--cliente
+New-NAVServerUser -FullName 'Cristiano Paradisi' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\paradisic'-LicenseType 'Full'
+New-NAVServerUser -FullName 'Manuele Pistolesi' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\pistolesima'-LicenseType 'Full'
+New-NAVServerUser -FullName 'Nicolò Steca' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\stecan'-LicenseType 'Full'
+
+
+--personalizzazione utenti
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\nasPROTOS'
+
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\tartarim'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\bartolinig'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\forlaniv'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\strazzim'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\polis'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\lasagnas'
+
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\benettim'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\lodil'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\cantoneg'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\mantellif'
+
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\mozzarellij'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\bellodif'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\valentem'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\sania'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\tacinellil'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\marchellettag'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\cadeddum'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\giliolir'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\gilioliriccardo'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\degliespostif'
+
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\pierangelik'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\iommie'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\eleuteril'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\mancinellim'
+
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\paradisic'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\pistolesima'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\stecan'
