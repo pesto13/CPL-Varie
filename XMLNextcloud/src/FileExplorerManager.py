@@ -76,6 +76,7 @@ class FileExplorerManager:
 
 
     def modify_all(self):
+        # TODO
         """Updates dates according to Excel file.
 
         That's the core of the Activity.
@@ -89,7 +90,10 @@ class FileExplorerManager:
 
 
     def modify_all_secondo(self):
-        """TODO
+        # TODO
+        """Updates xml tag according to the TODO.
+
+        That's the core of the Activity.
         """
         for root, _, files in os.walk(self.starting_folder):
             for file in files:
@@ -103,9 +107,8 @@ class FileExplorerManager:
 
                     with open(file_path, 'w', encoding='utf-8') as f:
                         for line in lines:
-                            if '<data_misura />' in line:
-                                line = line.replace('<data_misura />',
-                                                    f'<data_misura>{data}</data_misura>')
+                            line = line.replace('<data_misura />',
+                                                f'<data_misura>{data}</data_misura>')
                             f.write(line)
 
 
@@ -134,23 +137,22 @@ class FileExplorerManager:
             for file in files:
                 if file.endswith(self.new_ends_with+'.xml'):
                     filename = os.path.join(root, file)
-                    self._replace_line_in_file(filename, old_line, new_line)
+                    self.__replace_line_in_file(filename, old_line, new_line)
 
 
     @staticmethod
-    def _replace_line_in_file(filename, old_line, new_line):
-        """replace a line in the file header
+    def __replace_line_in_file(filename, old_line, new_line):
+        """Replace a line in the file
 
         Args:
-            filename (_type_): _description_
+            filename (string): the file modified
+            old_line (string): the old string
+            new_line (string): the new string
         """
         with open(filename, 'r', encoding='utf-8') as f:
             lines = f.readlines()
 
         with open(filename, 'w', encoding='utf-8') as f:
             for line in lines:
-                # Trova la riga che contiene <FlussoMisure cod_flusso="TML">
-                if '<FlussoMisure cod_flusso="TML">' in line:
-                    # line = line.replace(, )
-                    line = line.replace(old_line, new_line)
+                line = line.replace(old_line, new_line)
                 f.write(line)

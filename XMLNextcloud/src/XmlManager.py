@@ -49,6 +49,7 @@ class XmlManager:
         with open(self.filename, 'r+', encoding='utf-8') as f:
             content = f.read()
             f.seek(0, 0)
+            # questa stringa viene usata per ex1 e pure tutti direi
             f.write('<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' + content)
 
 
