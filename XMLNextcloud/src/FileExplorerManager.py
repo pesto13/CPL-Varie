@@ -104,19 +104,21 @@ class FileExplorerManager:
                                                 f'<data_misura>{data}</data_misura>')
 
 
-    def move_zip_into_pool(self, pool_folder):
+    def move_zip_into_pool(self, ok_pool, error_pool):
         """Takes all zip files and moves em in a new Folder.
 
         Vanessa prefers all the zipped file in a giant pool,
         it's easier insted of having zipped file in a tree.
         """
-        if not os.path.exists(pool_folder):
-            os.makedirs(pool_folder)
+        if not os.path.exists(ok_pool):
+            os.makedirs(ok_pool)
+        if not os.path.exists(error_pool):
+            os.makedirs(error_pool)
 
         for root, _, files in os.walk(self.starting_folder):
             for file in files:
                 if file.endswith(self.new_ends_with+'.zip'):
-                    shutil.copyfile(os.path.join(root, file), os.path.join(pool_folder, file))
+                    shutil.copyfile(os.path.join(root, file), os.path.join(ok_pool, file))
 
 
     def replace_line_all_file(self, old_line, new_line):
