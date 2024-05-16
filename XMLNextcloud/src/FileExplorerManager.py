@@ -100,8 +100,15 @@ class FileExplorerManager:
                     file_path = os.path.join(root, file)
                     e=XmlManager.XmlManager(file_path)
                     data = e.find_tag_value('data_inst_mis')
-                    self.__replace_line_in_file(file_path, '<data_misura />',
-                                                f'<data_misura>{data}</data_misura>')
+
+                    if data is not None:
+                        self.__replace_line_in_file(file_path, '<data_misura />',
+                                                    f'<data_misura>{data}</data_misura>')
+                    else:
+                        old_file_path = file_path
+                        new_file_path = os.path.join(root, file.replace(self.new_ends_with+'.xml',
+                                                                        self.new_ends_with+'_KO.xml'))
+                        os.rename(old_file_path, new_file_path)
 
 
     def move_zip_into_pool(self, ok_pool, error_pool):

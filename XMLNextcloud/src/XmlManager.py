@@ -26,7 +26,7 @@ class XmlManager:
             if tag1 is not None and tag2 is not None:
                 # before = [tag1.text, tag2.text]
                 tag1.text, tag2.text = ExcelManager.validate_dates(tag1.text,
-                                                                                tag2.text)
+                                                                    tag2.text)
                 # after = [tag1.text, tag2.text]
                 # XmlManager._log(before, after)
 
@@ -40,7 +40,15 @@ class XmlManager:
         Main function used for the XMLNEXTCLOUD (ex2)
         """
         assert find_tag is not None
-        return self.root.find(parent_tag_name).find('.//' + find_tag).text
+
+        parent_tag = self.root.find(parent_tag_name)
+
+        if parent_tag is None:
+            raise ValueError(f'Tag {find_tag} not found')
+
+        tag_data_misura = parent_tag.find('.//' + find_tag)
+
+        return tag_data_misura.text if tag_data_misura is not None else None
 
 
     def __add_xml_header(self):
