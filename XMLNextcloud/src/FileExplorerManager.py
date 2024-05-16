@@ -75,7 +75,6 @@ class FileExplorerManager:
 
 
     def modify_all_ex1(self):
-        # TODO
         """Updates dates according to Excel file.
 
         That's the core of the Activity.
@@ -89,8 +88,7 @@ class FileExplorerManager:
 
 
     def modify_all_ex2(self):
-        # TODO
-        """Updates xml tag according to the latter below tag<data_inst_mis>.
+        """Updates xml tag according to the below tag<data_inst_mis>.
 
         That's the core of the Activity 2.
         """
