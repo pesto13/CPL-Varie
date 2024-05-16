@@ -40,7 +40,14 @@ class XmlManager:
         Main function used for the XMLNEXTCLOUD (ex2)
         """
         assert find_tag is not None
-        return self.root.find(parent_tag_name).find('.//' + find_tag).text
+
+        parent_tag = self.root.find(parent_tag_name)
+        # print(parent_tag.tag) if parent_tag is not None else print('nullo1')
+        tag_data_misura = parent_tag.find('.//' + find_tag)
+        # print(tag_data_misura.text) if tag_data_misura is not None else print('nullo2')
+            # print(tag_data_misura.text)
+
+        return tag_data_misura.text
 
 
     def __add_xml_header(self):

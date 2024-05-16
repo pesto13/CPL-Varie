@@ -98,6 +98,7 @@ class FileExplorerManager:
             for file in files:
                 if file.endswith(self.new_ends_with+'.xml'):
                     file_path = os.path.join(root, file)
+                    print(file_path)
                     e=XmlManager.XmlManager(file_path)
                     data = e.find_tag_value('data_inst_mis')
                     self.__replace_line_in_file(file_path, '<data_misura />',
