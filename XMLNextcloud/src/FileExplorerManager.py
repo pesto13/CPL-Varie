@@ -13,7 +13,7 @@ class FileExplorerManager:
         self.ends_with = ends_with
         self.new_ends_with = self.ends_with.replace('1', '2')
         self.starting_folder = starting_folder
-
+        self.error_pool_files_path = []
 
     def decompress_folder(self):
         """Decompress all zip archieves.
@@ -101,14 +101,12 @@ class FileExplorerManager:
                     e=XmlManager.XmlManager(file_path)
                     data = e.find_tag_value('data_inst_mis')
 
+                    # Modifica effettiva al file
                     if data is not None:
                         self.__replace_line_in_file(file_path, '<data_misura />',
                                                     f'<data_misura>{data}</data_misura>')
                     else:
-                        old_file_path = file_path
-                        new_file_path = os.path.join(root, file.replace(self.new_ends_with+'.xml',
-                                                                        self.new_ends_with+'_KO.xml'))
-                        os.rename(old_file_path, new_file_path)
+                        self.error_pool_files_path.append(file_path)
 
 
     def move_zip_into_pool(self, ok_pool, error_pool):
@@ -119,8 +117,12 @@ class FileExplorerManager:
         """
         if not os.path.exists(ok_pool):
             os.makedirs(ok_pool)
-        if not os.path.exists(error_pool):
+        if not os.path.exists(error_pool) and len(self.error_pool_files_path) > 0:
             os.makedirs(error_pool)
+
+        # sposto i file che hanno dato errore
+        for ef in self.error_pool_files_path:
+            shutil.move(os.path.join(self.starting_folder, ef), os.path.join(error_pool, ef))
 
         for root, _, files in os.walk(self.starting_folder):
             for file in files:
