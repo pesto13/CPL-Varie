@@ -15,6 +15,13 @@ class FileExplorerManager:
         self.starting_folder = starting_folder
         self.error_pool_files_path = []
 
+    def _pulizia(self):
+        for root, dirs, _ in os.walk(self.starting_folder):
+            for dir_name in dirs:
+                folder_path = os.path.join(root, dir_name)
+                shutil.rmtree(folder_path)
+
+
     def decompress_folder(self):
         """Decompress all zip archieves.
 
@@ -59,12 +66,12 @@ class FileExplorerManager:
                     os.rename(old_file_path, new_file_path)
 
 
-    def compress_folder(self):
+    def compress_folder(self, folder):
         """Compress all XML file.
 
         Since they come all zipped, we re-zip all the renamed xml files
         """
-        for root, dirs, _ in os.walk(self.starting_folder):
+        for root, dirs, _ in os.walk(folder):
             for dir_name in dirs:
                 if dir_name.endswith(self.ends_with):
                     folder_path = os.path.join(root, dir_name)
@@ -107,25 +114,30 @@ class FileExplorerManager:
                         self.error_pool_files_path.append(file_path)
 
 
-    def move_zip_into_pool(self, ok_pool, error_pool):
+    def move_into_pool(self, ok_pool, error_pool):
         """Takes all zip files and moves em in a new Folder.
 
         Vanessa prefers all the zipped file in a giant pool,
         it's easier insted of having zipped file in a tree.
         """
-        if not os.path.exists(ok_pool):
-            os.makedirs(ok_pool)
-        if not os.path.exists(error_pool) and len(self.error_pool_files_path) > 0:
+
+        shutil.rmtree(ok_pool)
+        shutil.rmtree(error_pool)
+
+        os.makedirs(ok_pool)
+        if len(self.error_pool_files_path) > 0:
             os.makedirs(error_pool)
 
         # sposto i file che hanno dato errore
         for ef in self.error_pool_files_path:
-            shutil.move(os.path.join(self.starting_folder, ef), os.path.join(error_pool, ef))
+            shutil.move(os.path.dirname(ef), error_pool)
 
         for root, _, files in os.walk(self.starting_folder):
             for file in files:
-                if file.endswith(self.new_ends_with+'.zip'):
-                    shutil.copyfile(os.path.join(root, file), os.path.join(ok_pool, file))
+                if file.endswith(self.new_ends_with+'.xml'):
+                    file_path = os.path.join(root, file)
+                    parent_folder = os.path.dirname(file_path)
+                    shutil.move(parent_folder, ok_pool)
 
 
     def replace_line_all_file(self, old_line, new_line):
