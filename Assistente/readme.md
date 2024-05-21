@@ -13,3 +13,13 @@ https://cplconcordia-admin.okta.com/admin/app/active_directory/instance/0oa4t31d
 Da active directory (mgt) metterlo disabled, e poi metterlo nella directory dei disabled.  
 Poi va disattivato anche su powershell, credo con il -state disabled  
 ```Set-NAVServerUser -WindowsAccount '' -ServerInstance '' -State 'Disabled'```
+
+
+----
+
+
+# JIRA
+
+## Aggiungi persone
+
+https://cpl4utilities.atlassian.net/jira/servicedesk/projects/CPL/customers
