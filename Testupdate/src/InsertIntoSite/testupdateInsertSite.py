@@ -83,7 +83,7 @@ def core(driver):
 
     text = driver.find_element(By.ID, 'txbSourceDbHost')
     text.clear()
-    text.send_keys('sv-db-dinet1.cpgnet.local')
+    text.send_keys('sv-db-dinet2.cpgnet.local')
 
     text = driver.find_element(By.ID, 'txbSourceDbName')
     text.clear()
