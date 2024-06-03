@@ -18,6 +18,7 @@ New-NAVServerUser -FullName 'Francesca Mantelli' -ServerInstance 'PROTOS'-Window
 --programmatori
 New-NAVServerUser -FullName 'Jacopo Mozzarelli' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\mozzarellij'-LicenseType 'Full'
 New-NAVServerUser -FullName 'Francesco Bellodi' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\bellodif'-LicenseType 'Full' -State 'Disabled'
+New-NAVServerUser -FullName 'Alex Golinelli' -ServerInstance 'BC210_2'-WindowsAccount 'CPGNET\golinellialex' -LicenseType 'Full' -State 'Disabled'
 New-NAVServerUser -FullName 'Marco Valente' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\valentem' -LicenseType 'Full'
 New-NAVServerUser -FullName 'Alberto Sani' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\sania'-LicenseType 'Full' -State 'Disabled'
 New-NAVServerUser -FullName 'Luca Tacinelli' -ServerInstance 'PROTOS'-WindowsAccount 'CPGNET\tacinellil'-LicenseType 'Full' -State 'Disabled'
@@ -55,6 +56,7 @@ New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER'
 
 New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\mozzarellij'
 New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\bellodif'
+New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\golinellialex'
 New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\valentem'
 New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\sania'
 New-NAVServerUserPermissionSet -ServerInstance 'PROTOS' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\tacinellil'
