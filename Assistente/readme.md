@@ -1,12 +1,29 @@
 # Utente Servizio
 
-## Creazione utente
+## active directory
+crealo con i suoi valori e mettilo nei 3 gruppi
+- okta1
+- okta2
+- user del cliente
 
-quando creo un nuovo cliente devo inserigli okta su questo link  
-https://cplconcordia-admin.okta.com/admin/apps/active  
-
+## okta
 Successivamente mettergli anche okta  
 https://cplconcordia-admin.okta.com/admin/app/active_directory/instance/0oa4t31dm9tyZYAtl696#tab-import
+
+## ambiente
+New-NAVServerUser -FullName 'Alessandra Corna' -ServerInstance 'condottenord'-WindowsAccount 'CPGNET\cornaa'-LicenseType 'Full'
+New-NAVServerUserPermissionSet -ServerInstance 'condottenord' -PermissionSetId 'SUPER' -WindowsAccount 'CPGNET\cornaa'
+
+
+
+ricordati che gli utenti devono essere inseriti anche sul loro ambiente, tramite powershell
+
+# Creazione Cliente
+
+quando creo un nuovo cliente devo inserigli okta su questo link  
+https://cplconcordia-admin.okta.com/admin/apps/active   
+
+
 
 ## Disabilitazione utente
 
