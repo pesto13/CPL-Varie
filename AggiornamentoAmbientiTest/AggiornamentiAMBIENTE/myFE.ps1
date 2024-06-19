@@ -12,7 +12,9 @@ function Publish-AllApp {
         [Parameter(Mandatory = $true)]
         [Array]$dependenciesArray,
         [Parameter(Mandatory = $true)]
-        [string]$PathApp
+        [string]$PathApp,
+        [Parameter(Mandatory = $true)]
+        [Int64]$scelta
     )
     foreach ($line in $dependenciesArray) {
         
@@ -24,6 +26,9 @@ function Publish-AllApp {
 
         $NomeApp = $line.SubString($PenultimateUnderscoreIndex + 1, $lastUnderscoreIndex - $PenultimateUnderscoreIndex - 1)
         $Versione = $line.SubString($lastUnderscoreIndex + 1, $ultimateDotIndex - $lastUnderscoreIndex - 1)
+
+        if ($scelta -eq 2){ $line = $line.Replace('.app', '.runtime.app') }   
+
         $APPPath = ".\" + $PathApp + $line
 
         # ------------------------Pubblicazione-----------------------------------
@@ -88,27 +93,26 @@ function Uninstall-UnpublishAllApp {
 function main {
     Import-Module "C:\Program Files\Microsoft Dynamics 365 Business Central\210\Service\NavAdminTool.ps1"
 
-    $filePath = ".\Apps\dependencies.txt"
+    $dependenciesPath = ".\Apps\dependencies.txt"
     $logFilePath = ".\logfile.log"
     $appPath = @(".\Apps\", ".\Runtime\")
     $dependenciesArray = @()
 
-    if (Test-Path $filePath -PathType Leaf) {
-        $dependenciesArray = Get-Content $filePath
+    if (Test-Path $dependenciesPath -PathType Leaf) {
+        $dependenciesArray = Get-Content $dependenciesPath
         Write-Host "File letto correttamente. Righe lette: $($dependenciesArray.Count)"
     }
     else {
-        Write-Error "Il file non esiste o il percorso è sbagliato." | Out-File $logFilePath -Append
+        Write-Error "[$(Get-Date)] $serverInstance Il file non esiste o il percorso è sbagliato." | Out-File $logFilePath -Append
         exit
     }
 
     [array]::reverse($dependenciesArray)
     Uninstall-UnpublishAllApp -ServerInstance $serverInstance -dependenciesArray $dependenciesArray
-    [array]::reverse($dependenciesArray)  # Ripristina l'array originale
-    Publish-AllApp -ServerInstance $serverInstance -dependenciesArray $dependenciesArray -PathApp $appPath[$scelta - 1]
+    [array]::reverse($dependenciesArray)
+    Publish-AllApp -ServerInstance $serverInstance -dependenciesArray $dependenciesArray -PathApp $appPath[$scelta - 1] -scelta $scelta
 
-    $apps = Get-NAVAppInfo -ServerInstance $serverInstance | Where-Object -Property publisher -like 'cpl*'
-    $appCount = $apps.Count
+    $appCount = (Get-NAVAppInfo -ServerInstance $serverInstance | Where-Object -Property publisher -like 'cpl*').Count
     Write-Host "Numero totale di app pubblicate: $appCount"
     "[$(Get-Date)] $serverInstance $appCount" | Out-File -FilePath $logFilePath -Append
 }
