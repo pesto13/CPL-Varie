@@ -11,9 +11,7 @@ function Publish-AllApp {
         [Parameter(Mandatory = $true)]
         [string]$ServerInstance,
         [Parameter(Mandatory = $true)]
-        [Integer]$scelta,
-        # [Parameter(Mandatory = $true)]
-        # [Array]$dependenciesArray,
+        [Array]$dependenciesArray,
         [Parameter(Mandatory = $true)]
         [string]$PathApp
     )
@@ -57,9 +55,9 @@ function Publish-AllApp {
 function Uninstall-UnpublishAllApp {
     param(
         [Parameter(Mandatory = $true)]
-        [string]$ServerInstance
-        # [Parameter(Mandatory = $true)]
-        # [Array]$dependenciesArray
+        [string]$ServerInstance,
+        [Parameter(Mandatory = $true)]
+        [Array]$dependenciesArray
     )
     foreach ($line in $dependenciesArray) {
         Write-Host $line
@@ -93,7 +91,7 @@ function main {
 
     $filePath = ".\Apps\dependencies.txt"
     $logFilePath = ".\logfile.log"
-    $[string]appPath = [".\Apps\", ".\Runtime\"]
+    $[string]appPath = @(".\Apps\", ".\Runtime\")
     $dependenciesArray = @()
 
     if (Test-Path $filePath -PathType Leaf) {
@@ -105,9 +103,9 @@ function main {
     }
 
     [array]::reverse($dependenciesArray)
-    Uninstall-UnpublishAllApp -ServerInstance $serverInstance
+    Uninstall-UnpublishAllApp -ServerInstance $serverInstance -dependenciesArray $dependenciesArray
     [array]::reverse($dependenciesArray)
-    Publish-AllApp -ServerInstance $serverInstance -scelta $scelta -PathApp $appPath[$scelta - 1]
+    Publish-AllApp -ServerInstance $serverInstance -dependenciesArray $dependenciesArray -PathApp $appPath[$scelta - 1]
 
     # $info = Get-NAVAppInfo -ServerInstance $ServerInstance | Where-Object -Property publisher -like 'cpl*'
     $number = Get-NAVAppInfo -ServerInstance $ServerInstance | Where-Object -Property publisher -like 'cpl*' | Measure-Object
