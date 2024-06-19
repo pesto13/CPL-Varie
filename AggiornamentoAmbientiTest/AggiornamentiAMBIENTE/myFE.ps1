@@ -1,4 +1,3 @@
-# in input dai questi 2 obbligatori, cosi puo essere lanciato con parametri
 param(
     [Parameter(Mandatory = $true)]
     [string]$serverInstance,
@@ -91,7 +90,7 @@ function main {
 
     $filePath = ".\Apps\dependencies.txt"
     $logFilePath = ".\logfile.log"
-    $[string]appPath = @(".\Apps\", ".\Runtime\")
+    $appPath = @(".\Apps\", ".\Runtime\")
     $dependenciesArray = @()
 
     if (Test-Path $filePath -PathType Leaf) {
@@ -99,19 +98,19 @@ function main {
         Write-Host "File letto correttamente. Righe lette: $($dependenciesArray.Count)"
     }
     else {
-        Write-Error  "Il file non esiste o il percorso è sbagliato." | Out-File $logFilePath -Append
+        Write-Error "Il file non esiste o il percorso è sbagliato." | Out-File $logFilePath -Append
+        exit
     }
 
     [array]::reverse($dependenciesArray)
     Uninstall-UnpublishAllApp -ServerInstance $serverInstance -dependenciesArray $dependenciesArray
-    [array]::reverse($dependenciesArray)
+    [array]::reverse($dependenciesArray)  # Ripristina l'array originale
     Publish-AllApp -ServerInstance $serverInstance -dependenciesArray $dependenciesArray -PathApp $appPath[$scelta - 1]
 
-    # $info = Get-NAVAppInfo -ServerInstance $ServerInstance | Where-Object -Property publisher -like 'cpl*'
-    $number = Get-NAVAppInfo -ServerInstance $ServerInstance | Where-Object -Property publisher -like 'cpl*' | Measure-Object
-    "[$(Get-Date)] $serverInstance $number"  | Format-Table -AutoSize | Out-File $logFilePath -Append
+    $apps = Get-NAVAppInfo -ServerInstance $serverInstance | Where-Object -Property publisher -like 'cpl*'
+    $appCount = $apps.Count
+    Write-Host "Numero totale di app pubblicate: $appCount"
+    "[$(Get-Date)] $serverInstance $appCount" | Out-File -FilePath $logFilePath -Append
 }
-
-# (Get-NAVAppInfo casirate | Where-Object -Property Publisher -Like 'cpl*').name
 
 main -ServerInstance $serverInstance -scelta $scelta
