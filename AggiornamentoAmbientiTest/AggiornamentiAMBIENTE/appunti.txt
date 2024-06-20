@@ -1,0 +1,1 @@
+$sourcePath = "C:\Users\bellodifrancesco\Desktop\Pacchetto_240619_160651"; $destinationPath = "C:\apps\DiNetwork"; $files = Get-ChildItem -Path $sourcePath -Recurse -File; foreach ($file in $files) { $destFile = Join-Path -Path $destinationPath -ChildPath $file.Name; if (-Not (Test-Path -Path $destFile)) { Copy-Item -Path $file.FullName -Destination $destFile } }
