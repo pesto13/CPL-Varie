@@ -1,0 +1,10 @@
+[
+    {
+        "ServerInstance": "nome1",
+        "scelta": 1
+    },
+    {
+        "ServerInstance": "nome2",
+        "scelta": 2
+    }
+]

@@ -55,13 +55,16 @@ function Move-Artifacts {
 }
 
 function main {
-    
+    # Carica il contenuto del file JSON
+    $settingsFile = "settings.json"
+    $settings = Get-Content $settingsFile | ConvertFrom-Json
+
     if (-not (Move-Artifacts)){
-        Write-Error 'Errore nello spostatamento delle cartelle'
+        Write-Error 'Errore nello spostamento delle cartelle'
     }
 
     foreach ($s in $settings) {
-        $arguments = "-NoProfile -ExecutionPolicy Bypass -File .\myFE.ps1 -serverInstance $($s['ServerInstance']) -scelta $($s['scelta'])"
+        $arguments = "-NoProfile -ExecutionPolicy Bypass -File .\myFE.ps1 -serverInstance $($s.ServerInstance) -scelta $($s.scelta)"
         # Esecuzione dello script in una nuova istanza di PowerShell con privilegi di amministratore
         Start-Process powershell -ArgumentList $arguments -Verb RunAs
     }
