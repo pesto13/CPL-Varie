@@ -2,7 +2,9 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$serverInstance,
     [Parameter(Mandatory = $true)]
-    [Int64]$scelta
+    [Int64]$scelta,
+    [Parameter(Mandatory = $true)]
+    [string]$packageName
 )
 
 function Publish-AllApp {
@@ -93,7 +95,6 @@ function Uninstall-UnpublishAllApp {
 function main {
     Import-Module "C:\Program Files\Microsoft Dynamics 365 Business Central\210\Service\NavAdminTool.ps1"
 
-    # dichiarazioni
     $dependenciesPath = ".\Apps\dependencies.txt"
     $logFilePath = ".\logfile.log"
     $appPath = @(".\Apps\", ".\Runtime\")
@@ -120,4 +121,4 @@ function main {
     "[$(Get-Date)]`t$serverInstance`t$appCount`t$env:USERNAME`t$packageName" | Out-File -FilePath $logFilePath -Append
 }
 
-main -ServerInstance $serverInstance -scelta $scelta -packageName $packageName
+main
