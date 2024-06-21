@@ -54,9 +54,9 @@ function Copy-Artifacts {
 }
 
 function main {
-    param (
-        [switch]$skipMove
-    )
+    # param (
+    #     [switch]$skipMove
+    # )
     # Carica il contenuto del file JSON
     $settingsFile = "settings.json"
     $settings = Get-Content $settingsFile -raw | ConvertFrom-Json
@@ -68,7 +68,8 @@ function main {
         return
     }
 
-    if (-not($skipMove) -and -not(Copy-Artifacts -sourcePath $sourcePath.FullName)) {
+    # -not($skipMove) -and 
+    if (-not(Copy-Artifacts -sourcePath $sourcePath.FullName)) {
         Write-Error 'Errore nello spostamento delle cartelle'
     }
 
@@ -80,4 +81,4 @@ function main {
 }
 
 
-main -skipMove $skipMove
+main
