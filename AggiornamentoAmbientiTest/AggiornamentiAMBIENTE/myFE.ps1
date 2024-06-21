@@ -117,7 +117,7 @@ function main {
     # log
     $appCount = (Get-NAVAppInfo -ServerInstance $serverInstance | Where-Object -Property publisher -like 'cpl*').Count
     Write-Host "Numero totale di app pubblicate: $appCount"
-    "[$(Get-Date)] $serverInstance $appCount" | Out-File -FilePath $logFilePath -Append
+    "[$(Get-Date)]`t$serverInstance`t$appCount`t$env:USERNAME`t$packageName" | Out-File -FilePath $logFilePath -Append
 }
 
-main -ServerInstance $serverInstance -scelta $scelta
+main -ServerInstance $serverInstance -scelta $scelta -packageName $packageName
