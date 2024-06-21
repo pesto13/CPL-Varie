@@ -1,4 +1,7 @@
 
+param (
+    [switch]$skipMove
+)
 function Move-Artifacts {
     
     # Definizione del percorso base
@@ -49,7 +52,7 @@ function main {
     )
     # Carica il contenuto del file JSON
     $settingsFile = "settings.json"
-    $settings = Get-Content $settingsFile | ConvertFrom-Json
+    $settings = Get-Content $settingsFile -raw | ConvertFrom-Json
 
     if (-not($skipMove) -and -not(Move-Artifacts)){
         Write-Error 'Errore nello spostamento delle cartelle'
@@ -62,8 +65,5 @@ function main {
     }
 }
 
-param (
-    [switch]$skipMove
-)
 
-main -skipMove:$skipMove
+main -skipMove $skipMove
