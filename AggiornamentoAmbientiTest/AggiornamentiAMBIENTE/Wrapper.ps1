@@ -1,7 +1,7 @@
 
-param (
-    [switch]$skipMove
-)
+# param (
+#     [switch]$skipMove
+# )
 
 
 function Get-LatestPackage {
@@ -28,7 +28,7 @@ function Copy-Artifacts {
     )
 
     # Definizione del percorso di destinazione
-    $destinationPath = "C:\apps\DiNetwork"
+    $destinationPath = "."
 
     # Cancella le cartelle "App" e "Runtime" nella directory di destinazione, se esistono
     $appDir = Join-Path -Path $destinationPath -ChildPath "App"
@@ -54,9 +54,6 @@ function Copy-Artifacts {
 }
 
 function main {
-    # param (
-    #     [switch]$skipMove
-    # )
     # Carica il contenuto del file JSON
     $settingsFile = "settings.json"
     $settings = Get-Content $settingsFile -raw | ConvertFrom-Json
