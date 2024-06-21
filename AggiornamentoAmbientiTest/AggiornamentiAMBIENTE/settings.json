@@ -1,10 +1,23 @@
 [
     {
-        "ServerInstance": "nome1",
-        "scelta": 1
+        "NomeUmano": "Soresina",
+        "ServerInstance": "SORESINATESTING",
+        "scelta": 2
     },
     {
-        "ServerInstance": "nome2",
+        "NomeUmano": "VergasDEV",
+        "ServerInstance": "BC210_2",
+        "scelta": 1
+    },
+    // in disuso
+    {
+        "NomeUmano": "ASTBC21",
+        "ServerInstance": "ASTBC21",
         "scelta": 2
+    },
+    {
+        "NomeUmano": "Casirate",
+        "ServerInstance": "CASIRATEBC21",
+        "scelta": 1
     }
 ]

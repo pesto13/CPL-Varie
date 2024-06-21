@@ -1,14 +1,3 @@
-# Definizione dell'array di hash tables
-$settings = @(
-    @{
-        'ServerInstance' = 'nome'
-        'scelta'         = 1
-    }
-    @{
-        'ServerInstance' = 'nome'
-        'scelta'         = 2
-    }
-)
 
 function Move-Artifacts {
     
@@ -55,11 +44,14 @@ function Move-Artifacts {
 }
 
 function main {
+    param (
+        [switch]$skipMove
+    )
     # Carica il contenuto del file JSON
     $settingsFile = "settings.json"
     $settings = Get-Content $settingsFile | ConvertFrom-Json
 
-    if (-not (Move-Artifacts)){
+    if (-not($skipMove) -and -not(Move-Artifacts)){
         Write-Error 'Errore nello spostamento delle cartelle'
     }
 
@@ -70,4 +62,8 @@ function main {
     }
 }
 
-main
+param (
+    [switch]$skipMove
+)
+
+main -skipMove:$skipMove
