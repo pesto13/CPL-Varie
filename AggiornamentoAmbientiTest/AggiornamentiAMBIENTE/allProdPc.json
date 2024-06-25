@@ -1,0 +1,92 @@
+[
+    {
+        "ComputerName": "sv-srv-lig.cpgnet.local",
+        "ClientName": "LIGURIAGAS",
+        "License": "Cliente"
+    },
+    {
+        "ComputerName": "sv-srv-cgm.cpgnet.local",
+        "ClientName": "CGM",
+        "License": "Cliente"
+    },
+    {
+        "ComputerName": "sv-srv-ver.cpgnet.local",
+        "ClientName": "VERGAS",
+        "License": "Cliente"
+    },
+    {
+        "ComputerName": "sv-srv-cas.cpgnet.local",
+        "ClientName": "CASIRATE",
+        "License": "Cliente"
+    },
+    {
+        "ComputerName": "sv-srv-ser.cpgnet.local",
+        "ClientName": "SERVER",
+        "License": "Cliente"
+    },
+    {
+        "ComputerName": "sv-srv-azz.cpgnet.local",
+        "ClientName": "AZZANESE",
+        "License": "Cliente"
+    },
+    {
+        "ComputerName": "sv-srv-ped.cpgnet.local",
+        "ClientName": "PEDEMONTANA",
+        "License": "Cliente"
+    },
+    {
+        "ComputerName": "sv-srv-dim.cpgnet.local",
+        "ClientName": "DIMGAS",
+        "License": "Cliente"
+    },
+    {
+        "ComputerName": "sv-srv-mtm.cpgnet.local",
+        "ClientName": "METEMA",
+        "License": "Cliente"
+    },
+    {
+        "ComputerName": "sv-srv-mtg.cpgnet.local",
+        "ClientName": "METAGAS",
+        "License": "CPL"
+    },
+    {
+        "ComputerName": "sv-srv-con.cpgnet.local",
+        "ClientName": "CONDOTTENORD",
+        "License": "CPL"
+    },
+    {
+        "ComputerName": "sv-srv-sgd.cpgnet.local",
+        "ClientName": "SGDS",
+        "License": "CPL"
+    },
+    {
+        "ComputerName": "sv-srv-sad.cpgnet.local",
+        "ClientName": "SADORI",
+        "License": "CPL"
+    },
+    {
+        "ComputerName": "sv-srv-cog.cpgnet.local",
+        "ClientName": "COGAS",
+        "License": "CPL"
+    },
+    {
+        "ComputerName": "sv-srv-soc.cpgnet.local",
+        "ClientName": "SGDISTRIBUZIONE",
+        "License": "Cliente"
+    },
+    {
+        "ComputerName": "sv-srv-prt.cpgnet.local",
+        "ClientName": "PROTOS",
+        "License": "CPL"
+    },
+    {
+        "ComputerName": "sv-srv-fer.cpgnet.local",
+        "ClientName": "FERMOASITE",
+        "License": "CPL"
+    },
+    {
+        "ComputerName": "sv-srv-tnn.cpgnet.local",
+        "ClientName": "TENNA RETI",
+        "License": "CPL"
+    }
+]
