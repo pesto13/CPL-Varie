@@ -23,7 +23,7 @@ function Copy-Artifacts {
 
     # Definizione del percorso di destinazione, bisogna lanciarla da dentro la cartella
     $destinationPath = "."
-    # Cancella le cartelle "App" e "Runtime" nella directory di destinazione, se esistono
+    # Cancella le cartelle "Apps" e "Runtime" nella directory di destinazione, se esistono
     $appDir = Join-Path -Path $destinationPath -ChildPath "Apps"
     $runtimeDir = Join-Path -Path $destinationPath -ChildPath "Runtime"
 
