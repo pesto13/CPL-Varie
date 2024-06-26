@@ -62,7 +62,8 @@ function main {
 
     # Esegui lo script per ogni configurazione trovata nel file JSON
     foreach ($s in $settings) {
-        $arguments = "-NoProfile -ExecutionPolicy Bypass -File .\myFE.ps1 -serverInstance $($s.ServerInstance) -scelta $($s.scelta) -packageName $($sourcePath.Name)"
+        $arguments = "-NoProfile -ExecutionPolicy Bypass -File .\myFE.ps1 -serverInstance $($s.ServerInstance) -scelta $($s.scelta)"
+        #  -packageName $($sourcePath.Name) al massimo posso fare qualcosa qua
         # Esecuzione dello script in una nuova istanza di PowerShell con privilegi di amministratore
         Start-Process powershell -ArgumentList $arguments -Verb RunAs
     }

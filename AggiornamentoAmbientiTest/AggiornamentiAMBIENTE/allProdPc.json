@@ -1,5 +1,9 @@
 [
     {
+        "ComputerName": "sv-srv-con.cpgnet.local",
+        "ClientName": "CONDOTTENORD"
+    },
+    {
         "ComputerName": "sv-srv-lig.cpgnet.local",
         "ClientName": "LIGURIAGAS"
     },
@@ -40,10 +44,6 @@
         "ClientName": "METAGAS"
     },
     {
-        "ComputerName": "sv-srv-con.cpgnet.local",
-        "ClientName": "CONDOTTENORD"
-    },
-    {
         "ComputerName": "sv-srv-sgd.cpgnet.local",
         "ClientName": "SGDS"
     },
@@ -69,6 +69,6 @@
     },
     {
         "ComputerName": "sv-srv-tnn.cpgnet.local",
-        "ClientName": "TENNA RETI"
+        "ClientName": "TENNARETI"
     }
 ]

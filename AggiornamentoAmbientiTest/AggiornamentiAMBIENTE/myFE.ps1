@@ -2,9 +2,7 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$serverInstance,
     [Parameter(Mandatory = $true)]
-    [Int64]$scelta,
-    [Parameter(Mandatory = $true)]
-    [string]$packageName
+    [Int64]$scelta
 )
 
 function Publish-AllApp {
@@ -96,17 +94,12 @@ function main {
     Import-Module "C:\Program Files\Microsoft Dynamics 365 Business Central\210\Service\NavAdminTool.ps1"
 
     $dependenciesPath = ".\Apps\dependencies.txt"
-    $logFilePath = ".\logfile.log"
     $appPath = @(".\Apps\", ".\Runtime\")
     $dependenciesArray = @()
 
     if (Test-Path $dependenciesPath -PathType Leaf) {
         $dependenciesArray = Get-Content $dependenciesPath
         Write-Host "File letto correttamente. Righe lette: $($dependenciesArray.Count)"
-    }
-    else {
-        Write-Error "[$(Get-Date)] $serverInstance Il file non esiste o il percorso è sbagliato." | Out-File $logFilePath -Append
-        exit
     }
 
     # attivita
@@ -118,7 +111,7 @@ function main {
     # log
     $appCount = (Get-NAVAppInfo -ServerInstance $serverInstance | Where-Object -Property publisher -like 'cpl*').Count
     Write-Host "Numero totale di app pubblicate: $appCount"
-    "[$(Get-Date)]`t$serverInstance`t$appCount`t$env:USERNAME`t$packageName" | Out-File -FilePath $logFilePath -Append
+    return "[$(Get-Date)] $serverInstance $appCount $env:USERNAME"
 }
 
 main
