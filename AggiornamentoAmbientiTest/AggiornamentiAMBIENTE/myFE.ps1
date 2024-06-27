@@ -32,26 +32,26 @@ function Publish-AllApp {
         $APPPath = ".\" + $PathApp + $line
 
         # ------------------------Pubblicazione-----------------------------------
-        Write-Output "Inizio Pubblicazione app $NomeApp" 
+        Write-Verbose "Inizio Pubblicazione app $NomeApp" 
         Publish-NAVApp -ServerInstance $ServerInstance -Path $APPPath -SkipVerification
-        Write-Output "Pubblicazione app $NomeApp" 
+        Write-Verbose "Pubblicazione app $NomeApp" 
 
         # ------------------------Sync-----------------------------------
-        Write-Output "Inizio Sync app $NomeApp" 
+        Write-Verbose "Inizio Sync app $NomeApp" 
         Sync-NAVApp -ServerInstance $ServerInstance -Name $NomeApp -Version $Versione -Mode ForceSync -Force
-        Write-Output "Fine Sync app $NomeApp"
+        Write-Verbose "Fine Sync app $NomeApp"
 
         # ------------------------Install-----------------------------------
-        Write-Output "Inizio Installazione app $NomeApp" 
+        Write-Verbose "Inizio Installazione app $NomeApp" 
         Install-NAVApp -ServerInstance $ServerInstance -Name $NomeApp -Version $Versione -Force 
-        Write-Output "Fine Installazione app $NomeApp"
+        Write-Verbose "Fine Installazione app $NomeApp"
 
         # ------------------------Upgrade-----------------------------------
-        Write-Output "Inizio Upgrade app $NomeApp" 
+        Write-Verbose "Inizio Upgrade app $NomeApp" 
         Start-NAVAppDataUpgrade -ServerInstance $ServerInstance -Name $NomeApp -Version $Versione -Force
-        Write-Output "Fine Upgrade app $NomeApp"
+        Write-Verbose "Fine Upgrade app $NomeApp"
 
-        Write-Output "app N."$Contatore        
+        Write-Verbose "app N."$Contatore        
     }
 }
 
@@ -64,7 +64,7 @@ function Uninstall-UnpublishAllApp {
         [Array]$dependenciesArray
     )
     foreach ($line in $dependenciesArray) {
-        Write-Output $line
+        Write-Verbose $line
 
         $lastUnderscoreIndex = $line.LastIndexOf("_")
         $PenultimateUnderscoreString = $line.SubString(0, $lastUnderscoreIndex)
@@ -75,17 +75,17 @@ function Uninstall-UnpublishAllApp {
         $Versione = $line.SubString($lastUnderscoreIndex + 1, $ultimateDotIndex - $lastUnderscoreIndex - 1)
 
         # ------------------------Disinstallazione----------------------------------
-        Write-Output "Inizio Disinstallazione app $NomeApp" 
+        Write-Verbose "Inizio Disinstallazione app $NomeApp" 
         Uninstall-NAVApp $ServerInstance -Name $NomeApp -Force
-        Write-Output "Disinstallata $NomeApp"
+        Write-Verbose "Disinstallata $NomeApp"
         # ------------------------Depubblicazione-----------------------------------
-        Write-Output "Inizio depubblicazione app $NomeApp" 
+        Write-Verbose "Inizio depubblicazione app $NomeApp" 
         Unpublish-NAVApp $ServerInstance -Name $NomeApp
-        Write-Output "Depubblicazione app $NomeApp" 
+        Write-Verbose "Depubblicazione app $NomeApp" 
         
         # Stampa i risultati
-        Write-Output "NomeApp: $NomeApp"
-        Write-Output "Versione: $Versione"
+        Write-Verbose "NomeApp: $NomeApp"
+        Write-Verbose "Versione: $Versione"
     }
 }
 
@@ -99,7 +99,7 @@ function main {
 
     if (Test-Path $dependenciesPath -PathType Leaf) {
         $dependenciesArray = Get-Content $dependenciesPath
-        Write-Output "File letto correttamente. Righe lette: $($dependenciesArray.Count)"
+        Write-Verbose "File letto correttamente. Righe lette: $($dependenciesArray.Count)"
     }
 
     # attivita
@@ -110,7 +110,7 @@ function main {
 
     # log
     $appCount = (Get-NAVAppInfo -ServerInstance $serverInstance | Where-Object -Property publisher -like 'cpl*').Count
-    Write-Output "Numero totale di app pubblicate: $appCount"
+    Write-Verbose "Numero totale di app pubblicate: $appCount"
     return "[$(Get-Date)] $serverInstance $appCount $env:USERNAME"
 }
 

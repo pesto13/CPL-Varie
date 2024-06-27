@@ -61,15 +61,16 @@ function main {
     
 
     # Esegui lo script per ogni configurazione trovata nel file JSON
-    $out = @()
+    $jobs = @()
     foreach ($s in $settings) {
         $arguments = "-NoProfile -ExecutionPolicy Bypass -File .\myFE.ps1 -serverInstance $($s.ServerInstance) -scelta $($s.scelta)"
         #  -packageName $($sourcePath.Name) al massimo posso fare qualcosa qua
         # Esecuzione dello script in una nuova istanza di PowerShell con privilegi di amministratore
-        $out += Invoke-Command -ScriptBlock { & powershell.exe $using:arguments}
+        $jobs += Invoke-Command -ScriptBlock { & powershell.exe $using:arguments} -AsJob
     }
 
-    $out | Format-Table -AutoSize | Out-File 'log.log' -Append
+    Wait-Job -Job $jobs | Out-Null
+    $jobs | Format-Table -AutoSize | Out-File 'log.log' -Append
 
 }
 

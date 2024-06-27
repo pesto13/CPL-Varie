@@ -10,7 +10,7 @@ foreach ($pc in $pcProduzione) {
     $jobs += Invoke-Command -Credential $credential -ComputerName $($pc.ComputerName) -ScriptBlock {
         param ($ClientName)
         Set-Location "C:\apps\DiNetwork"
-        return .\myFE.ps1 -serverInstance $ClientName -scelta 2 1>$null
+        return .\myFE.ps1 -serverInstance $ClientName -scelta
     } -ArgumentList $($pc.ClientName) -AsJob
 }
 
