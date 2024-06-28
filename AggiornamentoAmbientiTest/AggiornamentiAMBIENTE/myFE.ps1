@@ -18,7 +18,6 @@ function Publish-AllApp {
     )
     foreach ($line in $dependenciesArray) {
         
-        $Contatore += 1
         $lastUnderscoreIndex = $line.LastIndexOf("_")
         $PenultimateUnderscoreString = $line.SubString(0, $lastUnderscoreIndex)
         $PenultimateUnderscoreIndex = $PenultimateUnderscoreString.LastIndexOf("_")
@@ -51,7 +50,8 @@ function Publish-AllApp {
         Start-NAVAppDataUpgrade -ServerInstance $ServerInstance -Name $NomeApp -Version $Versione -Force
         Write-Verbose "Fine Upgrade app $NomeApp"
 
-        Write-Verbose "app N."$Contatore        
+        $ProgressNumber++
+        Write-Progress -Activity "$serverInstance" -Status "Uninstalling app: $NomeApp" -PercentComplete ($ProgressNumber / $dependenciesArray.Count) * 100 / 50  
     }
 }
 
@@ -86,9 +86,13 @@ function Uninstall-UnpublishAllApp {
         # Stampa i risultati
         Write-Verbose "NomeApp: $NomeApp"
         Write-Verbose "Versione: $Versione"
+
+        $ProgressNumber++
+        Write-Progress -Activity "$serverInstance" -Status "Uninstalling app: $NomeApp" -PercentComplete ($ProgressNumber / $dependenciesArray.Count) * 100 / 50
     }
 }
 
+$ProgressNumber
 
 function main {
     Import-Module "C:\Program Files\Microsoft Dynamics 365 Business Central\210\Service\NavAdminTool.ps1"
@@ -104,7 +108,7 @@ function main {
 
     # attivita
     [array]::reverse($dependenciesArray)
-    Uninstall-UnpublishAllApp -ServerInstance $serverInstance -dependenciesArray $dependenciesArray
+    Uninstall-UnpublishAllApp -ServerInstance $serverInstance -dependenciesArray $dependenciesArray 
     [array]::reverse($dependenciesArray)
     Publish-AllApp -ServerInstance $serverInstance -dependenciesArray $dependenciesArray -PathApp $appPath[$scelta - 1] -scelta $scelta
 

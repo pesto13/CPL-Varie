@@ -16,3 +16,4 @@ foreach ($pc in $pcProduzione) {
 
 Wait-Job -Job $jobs | Out-Null
 $jobs | Receive-Job | Format-Table -AutoSize | Out-File 'log.log'
+Remove-Job -Job -$jobs
