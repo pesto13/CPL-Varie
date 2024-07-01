@@ -2,6 +2,8 @@ param(
     [string]$Filename
 )
 
+# QUSTO e` stato usato in produzione l'ultima volta
+
 $credential = Get-Credential
 $pcProduzione = $pcProduzione = Get-Content -Path 'allProdPc.json' -Raw | ConvertFrom-Json
 $jobs = @()

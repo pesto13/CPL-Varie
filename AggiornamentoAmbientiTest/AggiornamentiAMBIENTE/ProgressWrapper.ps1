@@ -2,6 +2,9 @@ param(
     [switch]$CopyFromDesktop
 )
 
+# questo vorrebbe essere evoluzione di Wrapper
+# lo sto usando per fare i test per quanto riguarda i log
+
 function Get-LatestPackage {
     # Definizione del percorso base
     $basePath = "$env:UserProfile\Desktop"

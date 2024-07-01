@@ -1,3 +1,5 @@
+# questo viene utilizzato in test per aggiornare gli ambienti di test
+
 function Get-LatestPackage {
     # Definizione del percorso base
     $basePath = "$env:UserProfile\Desktop"
