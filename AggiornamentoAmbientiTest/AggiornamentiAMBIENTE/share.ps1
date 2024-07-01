@@ -1,11 +1,15 @@
 param(
-    [string]$Filename
+    [Parameter(Mandatory)]
+    [string]$Filename,
+    [Parameter(Mandatory)]
+    [string]$fileDestination,
+    [Parameter(Mandatory)]
+    [string]$JSONConfig
 )
 
-
 $credential = Get-Credential
-$pcProduzione = $pcProduzione = Get-Content -Path 'allProdPc.json' -Raw | ConvertFrom-Json
-$fileDestination = "C:\apps\DiNetwork"
+$pcProduzione = Get-Content -Path $JSONConfig -Raw | ConvertFrom-Json
+# $fileDestination = "C:\apps\DiNetwork"
 
 foreach ($pc in $pcProduzione){
     $Session = New-PSSession -ComputerName $($pc.ComputerName) -Credential $credential

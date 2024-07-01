@@ -1,12 +1,13 @@
 param(
-    [switch]$CopyFromDesktop
+    [switch]$CopyFromDesktop,
+    [switch]$Verbose
 )
 
 # questo vorrebbe essere evoluzione di Wrapper
 # lo sto usando per fare i test per quanto riguarda i log
 
 function Get-LatestPackage {
-    # Definizione del percorso base
+
     $basePath = "$env:UserProfile\Desktop"
 
     # Trova tutte le cartelle che corrispondono al pattern "Pacchetto_*"
@@ -28,18 +29,13 @@ function Copy-Artifacts {
         [string]$sourcePath
     )
 
-    # Definizione del percorso di destinazione, bisogna lanciarla da dentro la cartella
     $destinationPath = "."
     # Cancella le cartelle "Apps" e "Runtime" nella directory di destinazione, se esistono
     $appDir = Join-Path -Path $destinationPath -ChildPath "Apps"
     $runtimeDir = Join-Path -Path $destinationPath -ChildPath "Runtime"
 
-    if (Test-Path -Path $appDir) {
-        Remove-Item -Path $appDir -Recurse -Force
-    }
-    if (Test-Path -Path $runtimeDir) {
-        Remove-Item -Path $runtimeDir -Recurse -Force
-    }
+    if (Test-Path -Path $appDir)     { Remove-Item -Path $appDir     -Recurse -Force }
+    if (Test-Path -Path $runtimeDir) { Remove-Item -Path $runtimeDir -Recurse -Force }
 
     # Copia tutte le cartelle dalla directory di origine alla directory di destinazione
     foreach ($dir in Get-ChildItem -Path $sourcePath -Directory) {
@@ -52,10 +48,9 @@ function Copy-Artifacts {
 }
 
 function main {
-    # Carica il contenuto del file JSON
+
     $settingsFile = "settings.json"
     $settings = Get-Content $settingsFile -raw | ConvertFrom-Json
-    
 
     if ($CopyFromDesktop) {
         $sourcePath = Get-LatestPackage
@@ -77,11 +72,14 @@ function main {
         # Esecuzione dello script in una nuova istanza di PowerShell con privilegi di amministratore
         $jobs += Start-Job -ScriptBlock { 
             param($serverInstance, $scelta)
-            return .\myFE.ps1 -serverInstance $serverInstance -scelta $scelta
+            if ($Verbose) {
+                .\myFE.ps1 -serverInstance $ClientName -scelta 2 -Verbose
+            }
+            else {
+                .\myFE.ps1 -serverInstance $ClientName -scelta 2
+            }
         } -ArgumentList $($s.ServerInstance), $($s.scelta) 
     }
-
-    # Wait-Job -Job $jobs | Out-Null
 
     while ($jobs.State -contains 'Running') {
         Clear-Host

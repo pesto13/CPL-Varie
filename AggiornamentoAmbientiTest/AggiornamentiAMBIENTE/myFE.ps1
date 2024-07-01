@@ -95,7 +95,7 @@ function Uninstall-UnpublishAllApp {
 $ProgressNumber
 
 function main {
-    Import-Module "C:\Program Files\Microsoft Dynamics 365 Business Central\210\Service\NavAdminTool.ps1"
+    Import-Module "C:\Program Files\Microsoft Dynamics 365 Business Central\210\Service\NavAdminTool.ps1" | Out-Null
 
     $dependenciesPath = ".\Apps\dependencies.txt"
     $appPath = @(".\Apps\", ".\Runtime\")
@@ -106,7 +106,7 @@ function main {
         Write-Verbose "File letto correttamente. Righe lette: $($dependenciesArray.Count)"
     }
 
-    # attivita
+    # attività
     [array]::reverse($dependenciesArray)
     Uninstall-UnpublishAllApp -ServerInstance $serverInstance -dependenciesArray $dependenciesArray 
     [array]::reverse($dependenciesArray)
@@ -115,7 +115,7 @@ function main {
     # log
     $appCount = (Get-NAVAppInfo -ServerInstance $serverInstance | Where-Object -Property publisher -like 'cpl*').Count
     Write-Verbose "Numero totale di app pubblicate: $appCount"
-    return "[$(Get-Date)] $serverInstance $appCount $env:USERNAME"
+    Write-Output "[$(Get-Date)] $serverInstance $appCount $env:USERNAME"
 }
 
 main

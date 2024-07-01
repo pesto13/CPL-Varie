@@ -1,5 +1,5 @@
 param(
-    [string]$Filename
+    [switch]$Verbose
 )
 
 # QUSTO e` stato usato in produzione l'ultima volta
@@ -12,7 +12,11 @@ foreach ($pc in $pcProduzione) {
     $jobs += Invoke-Command -Credential $credential -ComputerName $($pc.ComputerName) -ScriptBlock {
         param ($ClientName)
         Set-Location "C:\apps\DiNetwork"
-        return .\myFE.ps1 -serverInstance $ClientName -scelta 2
+        if($Verbose){
+            .\myFE.ps1 -serverInstance $ClientName -scelta 2 -Verbose
+        }else{
+            .\myFE.ps1 -serverInstance $ClientName -scelta 2
+        }
     } -ArgumentList $($pc.ClientName) -AsJob
 }
 
