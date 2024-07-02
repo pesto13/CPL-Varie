@@ -8,15 +8,5 @@
         "NomeUmano": "VergasDEV",
         "ServerInstance": "BC210_2",
         "scelta": 1
-    },
-    {
-        "NomeUmano": "ASTBC21",
-        "ServerInstance": "ASTBC21",
-        "scelta": 2
-    },
-    {
-        "NomeUmano": "Casirate",
-        "ServerInstance": "CASIRATEBC21",
-        "scelta": 1
     }
 ]
