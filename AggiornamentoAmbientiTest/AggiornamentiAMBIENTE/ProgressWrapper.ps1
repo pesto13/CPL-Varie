@@ -34,7 +34,7 @@ function Copy-Artifacts {
     $appDir = Join-Path -Path $destinationPath -ChildPath "Apps"
     $runtimeDir = Join-Path -Path $destinationPath -ChildPath "Runtime"
 
-    if (Test-Path -Path $appDir)     { Remove-Item -Path $appDir     -Recurse -Force }
+    if (Test-Path -Path $appDir) { Remove-Item -Path $appDir     -Recurse -Force }
     if (Test-Path -Path $runtimeDir) { Remove-Item -Path $runtimeDir -Recurse -Force }
 
     # Copia tutte le cartelle dalla directory di origine alla directory di destinazione
@@ -64,40 +64,21 @@ function main {
         Copy-Artifacts -sourcePath $sourcePath.FullName
     }
     
-
-    # Esegui lo script per ogni configurazione trovata nel file JSON
     $jobs = @()
     foreach ($s in $settings) {
-        #  -packageName $($sourcePath.Name) al massimo posso fare qualcosa qua
-        # Esecuzione dello script in una nuova istanza di PowerShell con privilegi di amministratore
-        $jobs += Start-Job -ScriptBlock { 
+        $jobs += Start-Job -ScriptBlock {
             param($serverInstance, $scelta)
-            if ($Verbose) {
-                .\myFE.ps1 -serverInstance $ClientName -scelta 2 -Verbose
-            }
-            else {
-                .\myFE.ps1 -serverInstance $ClientName -scelta 2
-            }
-        } -ArgumentList $($s.ServerInstance), $($s.scelta) 
+            . .\myFE.ps1
+            invoke-myFE -serverInstance $serverInstance -scelta $scelta
+            # sleep 2
+        } -ArgumentList $($s.ServerInstance), $($s.scelta)
+
+        # .\myFE.ps1 -serverInstance $($s.ServerInstance) -scelta $($s.scelta)
     }
 
-    while ($jobs.State -contains 'Running') {
-        Clear-Host
-        foreach ($job in $jobs) {
-            if ($job.State -eq 'Running') {
-                # Ricevi l'output solo se il job è completato
-                if ($job.State -eq 'Completed') {
-                    $jobOutput = Receive-Job -Job $job
-                    Write-Output $jobOutput
-                }
-            }
-        }
-        Start-Sleep -Seconds 5
-    }
-
+    Wait-Job -Job $jobs
     $jobs | Format-Table -AutoSize | Out-File 'log.log' -Append
-    Remove-Job -Job -$jobs
-
+    Remove-Job -Job $jobs
 }
 
 main

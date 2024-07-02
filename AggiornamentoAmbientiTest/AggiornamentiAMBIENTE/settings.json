@@ -1,12 +1,7 @@
 [
     {
-        "NomeUmano": "Soresina",
-        "ServerInstance": "SORESINATESTING",
-        "scelta": 2
-    },
-    {
-        "NomeUmano": "VergasDEV",
-        "ServerInstance": "BC210_2",
+        "NomeUmano": "test",
+        "ServerInstance": "casirate",
         "scelta": 1
     }
 ]

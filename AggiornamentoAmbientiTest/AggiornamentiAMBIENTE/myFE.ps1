@@ -46,12 +46,12 @@ function Publish-AllApp {
         Write-Verbose "Fine Installazione app $NomeApp"
 
         # ------------------------Upgrade-----------------------------------
-        Write-Verbose "Inizio Upgrade app $NomeApp" 
-        Start-NAVAppDataUpgrade -ServerInstance $ServerInstance -Name $NomeApp -Version $Versione -Force
-        Write-Verbose "Fine Upgrade app $NomeApp"
+        # Write-Verbose "Inizio Upgrade app $NomeApp" 
+        # Start-NAVAppDataUpgrade -ServerInstance $ServerInstance -Name $NomeApp -Version $Versione -Force
+        # Write-Verbose "Fine Upgrade app $NomeApp"
 
         $ProgressNumber++
-        Write-Progress -Activity "$serverInstance" -Status "Uninstalling app: $NomeApp" -PercentComplete ($ProgressNumber / $dependenciesArray.Count) * 100 / 2 
+        Write-Progress -Activity "$serverInstance" -Status "Uninstalling app: $NomeApp" -PercentComplete ($ProgressNumber / $dependenciesArray.Count * 100)
     }
 }
 
@@ -88,7 +88,7 @@ function Uninstall-UnpublishAllApp {
         Write-Verbose "Versione: $Versione"
 
         $ProgressNumber++
-        Write-Progress -Activity "$serverInstance" -Status "Uninstalling app: $NomeApp" -PercentComplete ($ProgressNumber / $dependenciesArray.Count) * 100 / 2
+        Write-Progress -Activity "$serverInstance" -Status "Uninstalling app: $NomeApp" -PercentComplete ($ProgressNumber / $dependenciesArray.Count * 100)
     }
 }
 
