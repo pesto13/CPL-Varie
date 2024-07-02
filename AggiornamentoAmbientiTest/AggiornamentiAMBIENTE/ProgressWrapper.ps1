@@ -63,17 +63,14 @@ function main {
         # Esegui la copia degli artefatti
         Copy-Artifacts -sourcePath $sourcePath.FullName
     }
-    
+
+    # https://learn.microsoft.com/it-it/powershell/module/microsoft.powershell.core/about/about_scripts?view=powershell-5.1#other-script-features
     $jobs = @()
     foreach ($s in $settings) {
         $jobs += Start-Job -ScriptBlock {
             param($serverInstance, $scelta)
-            . .\myFE.ps1
-            invoke-myFE -serverInstance $serverInstance -scelta $scelta
-            # sleep 2
+            . .\myFE.ps1 -serverInstance $serverInstance -scelta $scelta
         } -ArgumentList $($s.ServerInstance), $($s.scelta)
-
-        # .\myFE.ps1 -serverInstance $($s.ServerInstance) -scelta $($s.scelta)
     }
 
     Wait-Job -Job $jobs
