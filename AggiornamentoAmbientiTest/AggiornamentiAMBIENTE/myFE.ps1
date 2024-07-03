@@ -88,7 +88,7 @@ function Uninstall-UnpublishAllApp {
         Write-Verbose "Versione: $Versione"
 
         $ProgressNumber++
-        Write-Progress -Activity "$serverInstance" -Status "Uninstalling app: $NomeApp" -PercentComplete ($ProgressNumber / $dependenciesArray.Count * 100)
+        Write-Progress -Activity "$serverInstance" -Status "Installing app: $NomeApp" -PercentComplete ($ProgressNumber / $dependenciesArray.Count * 100)
     }
 }
 

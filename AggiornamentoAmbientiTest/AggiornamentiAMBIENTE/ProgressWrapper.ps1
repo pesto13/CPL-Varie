@@ -64,17 +64,38 @@ function main {
         Copy-Artifacts -sourcePath $sourcePath.FullName
     }
 
-    # https://learn.microsoft.com/it-it/powershell/module/microsoft.powershell.core/about/about_scripts?view=powershell-5.1#other-script-features
     $jobs = @()
     foreach ($s in $settings) {
         $jobs += Start-Job -ScriptBlock {
-            param($serverInstance, $scelta)
-            . .\myFE.ps1 -serverInstance $serverInstance -scelta $scelta
-        } -ArgumentList $($s.ServerInstance), $($s.scelta)
+            param($serverInstance, $scelta, $scriptPath)
+            Set-Location $scriptPath
+            .\myFE.ps1 -serverInstance $serverInstance -scelta $scelta -ErrorAction SilentlyContinue
+        } -ArgumentList $($s.ServerInstance), $($s.scelta), $PSScriptRoot
     }
 
-    Wait-Job -Job $jobs
-    $jobs | Format-Table -AutoSize | Out-File 'log.log' -Append
+    while ($jobs.State -contains "Running") {
+        Start-Sleep -Milliseconds 500
+        foreach ($j in $jobs) {
+            if ($j.State -eq "Running" -and $j.HasMoreData) {
+                $data = Receive-Job $j
+                if ($null -ne $data) {
+                    $i = $data.ToString()
+                    Write-Output $i
+                }
+            }
+        }
+    }
+
+    # Ricevere l'output finale di ciascun job e aggiungerlo all'array $allOutput
+    foreach ($j in $jobs) {
+        $finalOutput = Receive-Job -Job $j
+        if ($null -ne $finalOutput) {
+            $allOutput += $finalOutput.ToString();
+        }
+    }
+
+    # Scrivere l'output nel file di log
+    $allOutput | Format-Table -AutoSize | Out-File 'log.log' -Append
     Remove-Job -Job $jobs
 }
 
