@@ -1,6 +1,7 @@
 param(
     [switch]$CopyFromDesktop,
-    [switch]$Verbose
+    [switch]$Verbose,
+    [switch]$WriteProgress
 )
 
 # questo vorrebbe essere evoluzione di Wrapper
@@ -59,8 +60,6 @@ function main {
             Write-Error 'Nessuna cartella corrispondente trovata'
             return
         }
-
-        # Esegui la copia degli artefatti
         Copy-Artifacts -sourcePath $sourcePath.FullName
     }
 
@@ -73,29 +72,25 @@ function main {
         } -ArgumentList $($s.ServerInstance), $($s.scelta), $PSScriptRoot
     }
 
-    while ($jobs.State -contains "Running") {
-        Start-Sleep -Milliseconds 500
-        foreach ($j in $jobs) {
-            if ($j.State -eq "Running" -and $j.HasMoreData) {
-                $data = Receive-Job $j
-                if ($null -ne $data) {
-                    $i = $data.ToString()
-                    Write-Output $i
+    # TODO Revisiona
+    if($WriteProgress){
+        while ($jobs.State -contains "Running") {
+            Start-Sleep -Milliseconds 500
+            foreach ($j in $jobs) {
+                if ($j.State -eq "Running" -and $j.HasMoreData) {
+                    $data = Receive-Job $j
+                    if ($null -ne $data) {
+                        $i = $data.ToString()
+                        Write-Output $i
+                    }
                 }
             }
         }
     }
+    
 
-    # Ricevere l'output finale di ciascun job e aggiungerlo all'array $allOutput
-    foreach ($j in $jobs) {
-        $finalOutput = Receive-Job -Job $j
-        if ($null -ne $finalOutput) {
-            $allOutput += $finalOutput.ToString();
-        }
-    }
-
-    # Scrivere l'output nel file di log
-    $allOutput | Format-Table -AutoSize | Out-File 'log.log' -Append
+    Wait-Job -Job $jobs | Out-Null
+    $jobs | Receive-Job | Format-Table -AutoSize | Out-File 'log.log' -Append
     Remove-Job -Job $jobs
 }
 

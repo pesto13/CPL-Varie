@@ -1,0 +1,6 @@
+Apps/*
+Runtime/*
+
+log.log
+*.json
+*.txt
