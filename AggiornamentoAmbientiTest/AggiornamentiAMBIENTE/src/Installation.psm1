@@ -82,6 +82,10 @@ function Get-InstallationLog {
     Write-Output "[$(Get-Date)] $serverInstance $appCount $env:USERNAME"
 }
 
+function Invoke-CodeunitUpgrade {
+    
+}
+
 
 Export-ModuleMember -Function Uninstall-UnpublishAllApp
 Export-ModuleMember -Function Publish-AllApp
