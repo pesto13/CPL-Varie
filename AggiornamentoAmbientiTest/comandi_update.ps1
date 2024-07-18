@@ -1,9 +1,3 @@
-ast -> ASTBC21
-vergas -> BC210_2
-
-# hanno dato errore
-casirate -> CASIRATEBC21
-soresina -> SORESINATESTING
 
 
 New-NAVServerUser -FullName 'Francesco Bellodi' -ServerInstance 'bc210'-WindowsAccount 'CPGNET\bellodifrancesco'-LicenseType 'Full' -State 'Disabled'
