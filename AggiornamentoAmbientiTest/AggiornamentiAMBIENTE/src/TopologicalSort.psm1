@@ -119,7 +119,7 @@ function Get-TransposeGraph {
 
     foreach( $key in $Graph.Keys ){
         foreach( $d in $Graph[$key]['Dependencies']){
-           $TransposeGraph[$d.ToString()]['Dependencies'] += $key
+            $TransposeGraph[$d.ToString()]['Dependencies'] += $key
         }
     }
     return $TransposeGraph 
@@ -131,4 +131,3 @@ Export-ModuleMember -Function Get-DependenciesGraph
 Export-ModuleMember -Function Get-TopologicalSort
 Export-ModuleMember -Function Get-AppDependenciesList
 Export-ModuleMember -Function Get-TransposeGraph
-

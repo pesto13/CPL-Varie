@@ -26,7 +26,7 @@ function Get-AutomaticNextFirstPort {
     param (
         [string]$SlotX
     )
-    $jsonData = Get-Content -Path $DEFULT_SLOT_PORT -Raw | ConvertFrom-Json -AsHashtable
+    $jsonData = Get-Content -Path $DEFULT_SLOT_PORT -Raw | ConvertFrom-Json
     return [int]$jsonData[$SlotX]
 }
 
